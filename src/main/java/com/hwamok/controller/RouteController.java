@@ -40,4 +40,10 @@ public class RouteController {
   public String signUpPage() {
     return "sign-up";
   }
+
+  @GetMapping("/ui-boards")
+  public String board() {
+    return "board";
+  }
+
 }
