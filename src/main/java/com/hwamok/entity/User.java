@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+// Unique 유일한 값
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "uq_email", columnNames = "email")
+})
+// email을 중복되어 들어가지 않게 설정하는 방법
 public class User {
   // DB 예약어 == 특정 단어는 DB에서 사용되니까 테이블이름으로 사용하지마
 
@@ -38,6 +43,13 @@ public class User {
   private String email;
   private String password;
 
+  private String originalName;
+
+  private String saveName;
+
+  protected User() {}
+  // 기본 생성자를 외부에서 사용 못 하게함
+  
   public User(String name, String email, String password) {
     this.name = name;
     this.email = email;
@@ -55,4 +67,12 @@ public class User {
   public String getPassword() {
     return password;
   }
+
+    public void changeProfile(String originalName, String saveName) {
+      // 오리지날 파일명
+      // 세이브용 파일명
+
+      this.originalName=originalName;
+      this.saveName=saveName;
+    }
 }
