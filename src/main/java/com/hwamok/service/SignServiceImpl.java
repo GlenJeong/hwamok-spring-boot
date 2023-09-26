@@ -7,6 +7,8 @@ import com.hwamok.repository.SignRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SignServiceImpl implements SignService {
   // 이렇게 하는건 관례 에요.
@@ -36,5 +38,48 @@ public class SignServiceImpl implements SignService {
   @Override
   public void signUp(UserCreateDTO dto) {
     signRepository.save(new User(dto.getName(), dto.getEmail(), dto.getPassword()));
+  }
+
+
+  @Override
+  public User signIn(String email, String password) {
+
+    //이메일
+    
+    User user = signRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Not Found User"));
+    if(!password.equals(user.getPassword())){
+      throw new RuntimeException("Password Not Match");
+    }
+
+    // 비지니스 로직을 처리하는 곳
+    // 비밀번호 검증해야 하는 곳 <-- 비지니스 로직
+
+    
+    
+    // Optional의 의미는 null or not null 2가지만 가지고 있음
+    // Optional뒤에 다음에 메서드 체이닝으로 orElseThrow가 null이면 throw한다. (Exception)
+    // orElseThrow는 람다식을 통해서 제가 익셉션을 지정할 수 있음
+    // 람다식 쓰는 방법
+    // 람다식 기본 형태는 () -> {}
+    // 파라미터가 1개 있을 땐 param -> {}
+    // 파라미터가 2개이상 (param1, param2) -> {}
+    // {}는 구현부인테 한 줄 일때는 {} 생략 가능
+    //
+      System.out.println(user);
+
+    return user;
+
+
+  }
+
+  @Override
+  public String emailCheck(String email) {
+    Optional<User> byUserEmail = signRepository.findByEmail(email);
+
+    if(byUserEmail.isPresent()){
+      return null;
+    }else{
+      return "ok";
+    }
   }
 }

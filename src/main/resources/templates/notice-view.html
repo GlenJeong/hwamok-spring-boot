@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ko" layout:decorate="layout/basic" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <!--  Body Wrapper -->
+    <div class="container-fluid" layout:fragment="content">
+            <div class="form-group" >
+                <label for="title">제목</label>
+                <input type="text" class="form-control" name="title" id="title" placeholder="제목" disabled th:value="${view.title}">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">본문</label>
+                <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3" disabled th:text="${view.content}"></textarea>
+            </div>
+            <a th:href="@{/noticeEdit(id=${view.id})}" class="btn btn-primary m-1">edit</a>
+            <a th:href="@{/noticeDelete(id=${view.id})}" class="btn btn-danger m-1">withdraw</a>
+            <a href="/noticeList" class="btn btn-light-danger m-1">cancel</a>
+    </div>
+</html>

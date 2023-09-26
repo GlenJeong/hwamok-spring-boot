@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko" layout:decorate="layout/basic" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <!--  Body Wrapper -->
+  <div class="container-fluid" layout:fragment="content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4" th:text="${session.user.name}">Forms</h5>
+          <div class="card">
+            <div class="card-body">
+              <form action="/change-profile" method="post" id="changeProfileFrom">
+                <div class="mb-3">
+                <img src="../images/profile/user-1.jpg" alt="" width="100" height="100" class="rounded-circle">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" th:value="${session.user.email}" disabled>
+                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="userName" class="form-label">Change Name</label>
+                  <input type="text" class="form-control" id="userName" name="name" th:value="${session.user.name}">
+                </div>
+                <div class="mb-3">
+                  <label for="userPassword" class="form-label">Change Password</label>
+                  <input type="password" class="form-control" id="userPassword" name="password">
+                </div>
+                <div class="mb-3">
+                  <label for="userConfirmPassword" class="form-label">Confirm Password</label>
+                  <input type="password" class="form-control" id="userConfirmPassword">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="/withdraw" class="btn btn-danger">Withdraw</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 사람들이 Jquery 극혐이라고 하는 이유, Jquery와 CSR의 차이를 살펴보면 알 수 있다.
+    // CSR => Client Side Rendering
+    // vue.js, react, angular, svelt
+    // js엔진 Rendering => 생명주기 mount, fetch,
+    // CSR => 컴포넌트의 상태 및 생명주기를 관리하면서 개발하면 상태의 추적이 가능
+    // Jquery => 이미 랜더링된 상태에서 가짜로 그때만 눈속임으로 속성을 바꿔는 것 추적이 불 가능
+    // 실제로 생명관리를 하는 것이 아니라서 사람들이 극혐함
+
+    // Jquery 사용법
+    // $().명령어()
+    // $() => 선택자(id: #, class: .)
+    // 유저가 입력한 input의 값을 가져오고 싶음 => .val()
+
+    function passwordValidate() {
+      let password = $("#userPassword").val();
+      let confirmPassword = $("#userConfirmPassword").val();
+
+      if (password !== confirmPassword) {
+        alert("입력한 패스워드가 일치하지 않습니다.");
+        return false;
+      }
+    }
+
+  </script>
+</html>

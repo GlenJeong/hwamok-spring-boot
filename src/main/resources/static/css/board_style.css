@@ -1,0 +1,335 @@
+*{
+    margin: 0;
+    padding: 0;
+    /*모든 마진과 패딩을 0으로 초기화
+    기본적으로 태그에는 여백과 공간이 있다. 그래서 그걸 없앤다.*/
+}
+
+html{
+    font-size: 10px;
+    /*html안에서 모든 폰트 10px으로 초기화*/
+}
+
+ul, ui{
+    list-style: none;
+    /*모든 ul, ui의 list-style none으로 초기화
+    글머리표가 없어짐*/
+}
+
+a{
+    text-decoration: none;
+    color:inherit;
+    /*모든 a태그 초기화
+    color:inherit; 색은 부모에게 상속 받음
+    text-decoration: none; a 태그의 밑줄을 없애준다.*/
+}
+
+.board_wrap{
+    width: 1000px;
+    margin: 100px auto;
+}
+
+.board_title{
+    margin-bottom: 30px;
+}
+
+.board_title strong{
+    font-size: 3rem;
+    /*rem인 최상위 태그 html{
+    font-size: 10px;라서 strong은 30px이 된다.
+} */
+}
+
+.board_title p {
+    margin-top: 5px;
+    font-size: 1.4rem;
+    /*margin-top은 p태그 위에 5px의 공간 여유를 주는 것이다.
+    html 태그 10px에 1.4를 곱한 것이다.*/
+}
+
+.bt_wrap{
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0;
+    /* margin-top은 버튼 위 여유 공간 30px 주는 것이다.
+    text-align은 버튼 위치를 중앙에 위치하고 글자들도 테투리
+    안에서 정 가운데에 위치한다.
+    그 이유는 .bt_wrap a(자식)가 .bt_wrap(부모), 즉 자식이 부모를 
+    상속 받기 때문에 a 태그에 적용된다.
+    font-size를 0으로 하면 두 버튼 사이가 딱 붙는다.
+    */
+
+}
+
+.bt_wrap a{
+    display: inline-block;
+    min-width: 80px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    /*display는 위치를 지정하는 것인데 inline-block으로 지정하면 가로로 놓인다.
+    최소 길이는 80px이고 margin-left는 왼쪽으로 10px 밀어라
+    padding은 a 태그 안에 주위을 10px 여유 공간을 줘라
+    boarder는 1px의 검정색 실선으로 테두리를 만들어라
+    boarder-radius는 2px의 모서리를 둥글게 해라
+    폰트 1.4rem은 html 태그의 10px에 1.4를 곱하면 14폰트이다.  */
+}
+
+.bt_wrap a:first-child{
+    margin-left: 0;
+    /*margin-left: 0의 의미는 a 태그의 첫 번째 버튼을 왼쪽 고정한다는 의미이다.
+    그래야 가운데 정렬을 할 수 있다. .bt_wrap a에서 설정을 통해 나머지 버튼이 
+    첫 번째 버튼을 기준으로 .bt_wrap a의 margin-left: 10px; 왼쪽 옆으로 밀어 버린다.*/
+}
+
+.bt_wrap a.on{
+    background: #000;
+    color: #fff;
+    /*a.on a태크 뒤에 클래스 생성자를 사용할 때는 붙어야한다.
+    이것은 a태그의 class 속성에 속성 값 on을 강조하기 위해서 사용
+    검은 배경에 흰색 글씨 #000 검은색, #fff 흰색
+    */
+}
+
+.board_list{
+    width: 100%;
+    border-top: 2px solid #000;
+}
+
+.board_list > div{
+    border-bottom: 1px solid #000;
+    font-size: 0;
+}
+
+.board_list > div.top{
+    border-bottom: 1px solid #999;
+}
+ 
+.board_list > div:last-child{
+    border-bottom: 1px solid #000;
+}
+
+.board_list > div > div{  /*게시판의 각 리스트에 div 설정을 넣어준다. */ 
+    display: inline-block;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.board_list > div.top > div {
+    font-weight: 600;
+}
+
+.board_list .num{
+    width: 10%;
+}
+
+.board_list .title{
+    width: 60%;
+    text-align: center;
+}
+
+.board_list .top .title{
+    text-align: center;
+
+}
+
+.board_list .writer{
+    width: 10%;
+}
+
+.board_list .date{
+    width: 10%;
+}
+
+.board_list .count{
+    width: 10%;
+}
+
+.board_page {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0;
+}
+
+.board_page a{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    border-left: 0;
+    line-height: 100%;
+    /*
+    width: 32px; 너비, 가로 
+    height: 32px; 높이, 세로
+    */
+}
+
+.board_page a.bt{
+    padding-top: 10px;
+    font-size: 1.2rem;
+    letter-spacing: -1px;
+}
+
+.board_page a.num{
+    padding-top: 9px;
+    font-size: 1.4rem;
+}
+
+.board_page a.num.on{
+    border-color: #000;
+    background: #000;
+    color: #fff;
+}
+
+.board_page a:first-child{
+    border-left: 1px solid #ddd;
+}
+
+.board_view{
+    width: 100%;
+    border-top: 2px solid #000;
+}
+
+.board_view .title{
+    padding: 20px 15px;
+    border-bottom: 1px dashed #ddd;
+    font-size: 2rem;
+}
+
+.board_view .info{
+    padding: 15px;
+    border-bottom: 1px solid #999;
+    font-size: 0;
+}
+
+.board_view .info dl{
+    position: relative;
+    display: inline-block;
+    padding: 0 20px; 
+    /* 좌우 여유 20픽셀 */
+}
+
+.board_view .info dl:first-child{
+    padding-left: 0; 
+}
+
+.board_view .info dl::before{
+    /* 글머리표, 설명 */
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 13px;
+    background: #ddd;
+}
+
+.board_view .info dl:first-child::before{
+    display: none;
+}
+
+.board_view .info dl dt,
+.board_view .info dl dd{
+    display: inline-block;
+    font-size: 1.4rem;
+}
+
+.board_view .info dl dd{
+    margin-left: 10px;
+    color: #777;
+}
+
+.board_view .content{
+    padding: 15px;
+    border-bottom: 1px solid #000;
+    line-height: 160%;
+    font-size: 1.4rem;
+}
+
+.board_write{
+    border-top: 2px solid #000;
+}
+
+.board_write .title,
+.board_write .info{
+    padding: 15px;
+}
+
+.board_write .info{
+    border-top: 1px dashed #ddd; 
+    /*class="info" 위에 회색 실선 dashed 실선 */
+    border-bottom: 1px solid #000; 
+    /*class="info" 아래에 검은색 실선 solid 실선 */
+    font-size: 0;
+    /* info에 <dl></dl>과 <dl></dl>의 갱행이 될어가 있어서 font-size로 갱행을 없애야
+    가로로 글쓴이,input와 비밀번호,input이 가로로 놓일 수 있음  */
+}
+
+.board_write .title dl{
+    font-size: 0;
+}
+
+.board_write .info dl{
+    display: inline-block;
+    /*  글쓴이,input와 비밀번호,input이 가로로 놓일 수 있도록함*/
+    width: 50%;
+    vertical-align: middle;
+}
+
+.board_write .title dt,
+.board_write .title dd,
+.board_write .info dt,
+.board_write .info dd{
+    display: inline-block;
+    /* 제목과 input, 글쓴이와 input, 비밀번호와 input이 가로로 놓일 수 있도록함 */
+    vertical-align: middle;
+    font-size: 1.4rem;
+}
+
+.board_write .title dt,
+.board_write .info dt {
+    width: 100px;
+}
+
+.board_write .title dd{
+    width: calc(100% - 100px);
+}
+
+.board_write .title input[type="text"],
+.board_write .info input[type="text"],
+.board_write .info input[type="password"]{
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.board_write .title input[type="text"]{
+    width: 80%;
+}
+
+.board_write .content {
+    border-bottom: 1px solid #000;
+    /* class="content" 아래에 검은색 실선  */
+
+}
+
+.board_write .content textarea{
+    display: block;
+    width: 100%;
+    height: 300px;
+    padding: 15px;
+    box-sizing: border-box;
+    border: 0;
+    resize: vertical;
+    font-size: 1.4rem;
+    /* resize: vertical은 textarea을 위아래로 늘어나고 줄어들게 함 */
+}
+
+.btn-primary {
+    font-size: 1.4rem;
+}

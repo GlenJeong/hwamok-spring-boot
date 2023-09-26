@@ -2,7 +2,7 @@
 <html lang="ko" layout:decorate="layout/basic" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <!--  Body Wrapper -->
     <div class="container-fluid" layout:fragment="content">
-        <form action="/boards" method="post">
+        <form action="/noticeWrite" method="post">
             <div class="form-group">
                 <label for="title">제목</label>
                 <input type="text" class="form-control" name="title" id="title" placeholder="제목">
@@ -11,7 +11,8 @@
                 <label for="exampleFormControlTextarea1">본문</label>
                 <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary m-1">저장</button>
+            <button type="submit" class="btn btn-primary m-1">submit</button>
+            <a href="/noticeList" class="btn btn-light-danger m-1">cancel</a>
         </form>
     </div>
 </html>
