@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko" layout:decorate="layout/basic" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/html">
+<!--  Body Wrapper -->
+<div class="container-fluid" layout:fragment="content">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항</title>
+  <link rel="stylesheet" href="../css/board_css.css">
+</head>
+
+<body>
+<div class="board_wrap">
+  <div class="board_title">
+    <strong>공지사항 글쓰기</strong>
+    <p>글쓰기 게시판 작성중입니다.</p>
+  </div>
+  <form action="/noticeBoard" method="post">
+  <div class="board_write_wrap">
+    <div class="board_write">
+      <div class="title">
+        <dl>
+          <dt>제목</dt>
+          <dd><input type="text" name="title" id="title" placeholder="제목 입력"></dd>
+        </dl>
+      </div>
+      <div class="info">
+        <dl>
+          <dt>글쓴이</dt>
+          <dd><input type="text" name="writer" id="writer" placeholder="글쓴이 입력"></dd>
+        </dl>
+        <dl>
+          <dt>비밀번호</dt>
+          <dd><input type="password" name="password" id="password" placeholder="비밀번호 입력"></dd>
+        </dl>
+      </div>
+      <div class="content">
+        <label for="content"></label>
+                <textarea name="content" id="content" placeholder="내용 입력"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary m-1">등록</button>
+      <button type="reset" class="btn btn-primary m-1">취소</button>
+    </div>
+  </div>
+  </form>
+</div>
+</body>
+</div>
+</html>

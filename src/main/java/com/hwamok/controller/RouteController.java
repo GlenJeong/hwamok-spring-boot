@@ -1,17 +1,10 @@
 package com.hwamok.controller;
 
-import com.hwamok.repository.SignRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class RouteController {
-
-  private final SignRepository signRepository;
-
-  public RouteController(SignRepository signRepository) {
-    this.signRepository = signRepository;
-  }
 
   @GetMapping("/ui-buttons")
   public String uiButtonsPage() {
@@ -48,12 +41,9 @@ public class RouteController {
     return "sign-up";
   }
 
-  @GetMapping("/ui-notice")
-  public String board() { return "redirect:/noticeList";  }
-
-
-  @GetMapping("/my-page")
-  public String myPage(){
-    return "ui-mypage";
+  @GetMapping("/ui-boards")
+  public String board() {
+    return "board";
   }
+
 }

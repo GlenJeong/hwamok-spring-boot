@@ -128,7 +128,11 @@ a{
 
 .board_list .title{
     width: 60%;
+<<<<<<< HEAD
     text-align: center;
+=======
+    text-align: left;
+>>>>>>> origin/main
 }
 
 .board_list .top .title{

@@ -1,5 +1,6 @@
 package com.hwamok.controller;
 
+<<<<<<< HEAD
 import com.hwamok.controller.dto.ChangeProfileDTO;
 import com.hwamok.entity.User;
 import com.hwamok.service.UserService;
@@ -8,6 +9,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+=======
+import com.hwamok.entity.User;
+import com.hwamok.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+>>>>>>> origin/main
 
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/change-profile")
+<<<<<<< HEAD
     public String changeProfile(HttpSession session, ChangeProfileDTO dto){
         // 유저의 이름과 패스워드 있으면 바꿔줌
         // 명시적 형변환
@@ -67,4 +78,19 @@ public class UserController {
     // R 대충 3가지로 나눔
     // 단건 조회, 리스트조회 List Collection, 페이징조회 Pageable(JPA)
     
+=======
+    public void changeProfile( MultipartHttpServletRequest request){
+        // Spring의 요청을 처리하는 방식 2가지
+        // 1번째 방식은 기본으로 설정되어 있는 방식 => HttpServletRequest
+        // 첫번째 방식의 단점은 통로가 너무 좁음 
+        // HttpServletRequest 이 안에 세션이 있음
+        
+        // 명시적 형변환
+        User user = (User) request.getSession().getAttribute("user");
+        // session에서 유저 정보를 가지고 와서 유저에 저장
+
+        userService.changeProfile(user.getEmail(), request.getFile("imageFile"), request.getSession().getServletContext().getRealPath("/file"));
+
+    }
+>>>>>>> origin/main
 }
