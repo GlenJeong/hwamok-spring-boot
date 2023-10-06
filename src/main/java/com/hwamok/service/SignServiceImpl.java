@@ -1,10 +1,8 @@
 package com.hwamok.service;
 
-import com.hwamok.controller.SignController;
 import com.hwamok.controller.dto.UserCreateDTO;
 import com.hwamok.entity.User;
 import com.hwamok.repository.SignRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -43,6 +41,8 @@ public class SignServiceImpl implements SignService {
 
   @Override
   public User signIn(String email, String password) {
+    System.out.println("Service email = " + email);
+    System.out.println("Service password = " + password);
 
     //이메일
     

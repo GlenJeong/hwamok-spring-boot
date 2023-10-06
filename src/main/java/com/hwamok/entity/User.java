@@ -1,7 +1,6 @@
 package com.hwamok.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 public class User {
@@ -38,10 +37,14 @@ public class User {
   private String email;
   private String password;
 
+  protected User() {}
   public User(String name, String email, String password) {
     this.name = name;
     this.email = email;
     this.password = password;
+  }
+  public Long getId() {
+    return id;
   }
 
   public String getName() {
@@ -54,5 +57,13 @@ public class User {
 
   public String getPassword() {
     return password;
+  }
+
+  public void changeName(String name) {
+    this.name=name;
+  }
+
+  public void changePassword(String password) {
+    this.password=password;
   }
 }

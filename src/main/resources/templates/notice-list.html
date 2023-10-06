@@ -15,20 +15,22 @@
             <div class="board_list_wrap">
                 <div class="board_list">
                     <div class="top">
-                        <div class="num">번호</div>
-                        <div class="title">제목</div>
-                        <div class="writer">글쓴이</div>
+                        <div class="num">Number</div>
+                        <div class="title">Title</div>
+                        <div class="writer">UserId</div>
+                        <!--
                         <div class="date">작성일</div>
-                        <div class="count">조회</div>
+                        <div class="count">조회</div> -->
                     </div>
                     <div th:each="noticelist:${notice}">
                         <div class="num" th:text="${noticelist.id}">5</div>
                         <div class="title">
-                        <a th:text="${noticelist.title}" th:href="@{/noticeView(id=${noticelist.id})}"></a>
+                        <a th:text="${noticelist.title}" th:href="@{/noticeView/{id}(id=${noticelist.id})}"></a>
                         </div>
                         <div class="writer" th:text="${noticelist.userId}">정인범</div>
+                        <!--
                         <div class="date">2023.08.11</div>
-                        <div class="count">20</div>
+                        <div class="count">20</div>  -->
                     </div>
                 </div>
                 <div class="board_page">

@@ -1,0 +1,54 @@
+<html lang="ko" layout:decorate="layout/basic" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--  Body Wrapper -->
+<div class="container-fluid" layout:fragment="content">
+    <nav class="navbar navbar-light bg-light">
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="notice : ${notices} "> <!-- <tr></tr> 한 줄을 의미한다. 타임리프에서 반복문은 내가 시작하고자 하는 태그 부분에서 태그가 끝나는 부분까지 -->
+            <!--
+                th:each="key(notice):모돌에 담긴 키값(notices)"
+                notice[] = [notice1, notice2, notice3]
+                notice[0]
+                notice.get(2)
+
+            -->
+            <td th:text="${notice.id}">1</td>
+            <td th:text="${notice.title}">Mark</td>
+            <td th:text="${notice.userId}">Otto</td>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item" th:if="${currentPage > 1 }">
+                <a class="page-link" th:href="@{/notice}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <!-- 10개의 게시물, 2개씩 보여줄 때, 5페이지-->
+            <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" class="page-item">
+                <a class="page-link" th:href="@{/noticepage(curPage=${pageNumber + 1})}" th:text="${pageNumber + 1}">1</a></li>
+            <li class="page-item" th:if="${currentPage != totalPages}">
+                <a class="page-link" th:href="@{/noticepage(curPage=${totalPages})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!-- 컨트롤 알트 엘 -->
+</html>
+
+

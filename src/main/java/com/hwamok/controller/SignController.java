@@ -70,8 +70,8 @@ public class SignController {
   @PostMapping("/sign-in")
   public String signIn(SignInDTO dto, HttpSession session){
     // @RequestParam 쿼리 스트링을 받겠다는 의미함 ? key=value email이 key이고 value는 email안에 값이다.
-    System.out.println(dto.getEmail());
-    System.out.println(dto.getPassword());
+    System.out.println("Controller dto.getEmail() = " + dto.getEmail());
+    System.out.println("Controller dto.getPassword() = " + dto.getPassword());
 
     User user = signService.signIn(dto.getEmail(), dto.getPassword());
 

@@ -15,8 +15,7 @@ public class Notice {
     private String content;
     private Long userId;
 
-    protected Notice() {
-    }
+    protected Notice() {}
 
     public Notice(String title, String content, Long userId) {
         this.title = title;

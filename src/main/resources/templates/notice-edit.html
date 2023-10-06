@@ -12,7 +12,7 @@
         <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3" th:text="${edit.content}"></textarea>
     </div>
     <button type="submit" class="btn btn-primary m-1">submit</button>
-    <a th:href="@{/noticeDelete(id=${edit.id})}" class="btn btn-danger m-1">withdraw</a>
+    <a th:href="@{/noticeDelete/{id}(id=${edit.id})}" class="btn btn-danger m-1">withdraw</a>
     <a href="/noticeList" class="btn btn-light-danger m-1">cancel</a>
     </form>
 </div>
