@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void changeProfile(String email, String name, String password) {
+    public User changeProfile(String email, String name, String password) {
         TransactionStatus status = platformTransactionManager.getTransaction(new DefaultTransactionAttribute());
 
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("notice not found"));
@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService{
             e.printStackTrace();
             platformTransactionManager.rollback(status);
         }
+        return user;
     }
 
     @Override

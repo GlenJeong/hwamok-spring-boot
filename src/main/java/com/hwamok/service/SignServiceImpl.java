@@ -44,11 +44,13 @@ public class SignServiceImpl implements SignService {
     System.out.println("Service email = " + email);
     System.out.println("Service password = " + password);
 
+
     //이메일
     
     User user = signRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Not Found User"));
+    System.out.println("Service user.getPassword() = " + user.getPassword());
     if(!password.equals(user.getPassword())){
-      throw new RuntimeException("Password Not Match");
+      //throw new RuntimeException("Password Not Match");
     }
 
     // 비지니스 로직을 처리하는 곳
@@ -65,7 +67,6 @@ public class SignServiceImpl implements SignService {
     // 파라미터가 2개이상 (param1, param2) -> {}
     // {}는 구현부인테 한 줄 일때는 {} 생략 가능
     //
-      System.out.println(user);
 
     return user;
 
@@ -82,4 +83,5 @@ public class SignServiceImpl implements SignService {
       return "ok";
     }
   }
+
 }

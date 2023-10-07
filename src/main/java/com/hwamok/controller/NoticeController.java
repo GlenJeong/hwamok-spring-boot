@@ -1,7 +1,6 @@
 package com.hwamok.controller;
 
 import com.hwamok.controller.dto.NoticeCreateDTO;
-import com.hwamok.entity.Notice;
 import com.hwamok.entity.User;
 import com.hwamok.service.NoticeService;
 import org.springframework.stereotype.Controller;
@@ -21,6 +20,11 @@ public class NoticeController {
         this.noticeService = noticeService;
     }
 
+    @GetMapping("/noticeWrite")
+    public String noticeForm(){
+
+        return "notice-write";
+    }
 
     @PostMapping("/noticeWrite")
     public String createNotice(NoticeCreateDTO dto, HttpSession session){
@@ -32,12 +36,12 @@ public class NoticeController {
 
         // 숙제: 수정 삭제
     }
-
     // 하나의 Notice를 가져오는 방법이
     // GET을 써야 할 것 같음
     // 키 값(id)을 알아야 함
     // 주소에 notice의 id가 1번인 노티스 가져다줘
     // QueryString = > ?noticeId=1
+
     // {id} => PathVariable 많이 사용하는 추세, 특정 URL의 식별을 위해서 사용
 
 
@@ -55,12 +59,6 @@ public class NoticeController {
 
         model.addAttribute("notice", noticeService.findAll());
         return "notice-list";
-    }
-
-    @GetMapping("/noticeForm")
-    public String noticeForm(){
-
-        return "notice-write";
     }
 
     @GetMapping("/noticeView/{id}")

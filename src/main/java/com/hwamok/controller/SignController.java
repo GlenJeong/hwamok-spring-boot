@@ -70,13 +70,12 @@ public class SignController {
   @PostMapping("/sign-in")
   public String signIn(SignInDTO dto, HttpSession session){
     // @RequestParam 쿼리 스트링을 받겠다는 의미함 ? key=value email이 key이고 value는 email안에 값이다.
-    System.out.println("Controller dto.getEmail() = " + dto.getEmail());
-    System.out.println("Controller dto.getPassword() = " + dto.getPassword());
 
     User user = signService.signIn(dto.getEmail(), dto.getPassword());
 
     session.setAttribute("user", user);
-    //session.setMaxInactiveInterval(60); // 세션 유효시간, 기본이 초단위, 2는 2초를 의미
+    //session.setMaxInactiveInterval(60); // 세션 유효시간, 기본이 초단위, 60는 60초를 의미
+
 
 
 
@@ -101,8 +100,6 @@ public class SignController {
     // 1. 세션 => 서버에 있는 가상의 공간 서버가 죽으면 세션도 사라짐, 접근이 불가능 서버 혹은 템플릿엔진만 접근 가능
     // 2. 쿠키 ==> 사용자 컴퓨터에 저장해둠, 보안상 취약해서 위험하다.  
     // 3. jwt ==> 나중에 설명
-
-    session.setAttribute("user", user);
 
     return "redirect:/";
 

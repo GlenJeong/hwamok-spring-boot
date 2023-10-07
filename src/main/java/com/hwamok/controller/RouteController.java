@@ -56,7 +56,7 @@ public class RouteController {
 
   @GetMapping("/ui-notice")
   public String board() {
-    return "notice-write";
+    return "redirect:/noticeList";
   }
 
   @GetMapping("/my-page")

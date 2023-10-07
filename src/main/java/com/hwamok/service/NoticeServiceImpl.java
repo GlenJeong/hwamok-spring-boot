@@ -28,6 +28,12 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public void createNotice(NoticeCreateDTO dto, User user) {
+        if(dto.getTitle().isBlank()){
+            throw new RuntimeException("invalidate title");
+        }
+        if(dto.getContent().isBlank()){
+            throw new RuntimeException("invalidate content");
+        }
         noticeRepository.save(new Notice(dto.getTitle(), dto.getContent(), user.getId()));
 
     }

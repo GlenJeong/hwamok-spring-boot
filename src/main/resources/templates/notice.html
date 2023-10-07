@@ -39,7 +39,8 @@
             </li>
             <!-- 10개의 게시물, 2개씩 보여줄 때, 5페이지-->
             <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" class="page-item">
-                <a class="page-link" th:href="@{/noticepage(curPage=${pageNumber + 1})}" th:text="${pageNumber + 1}">1</a></li>
+                <a class="page-link" th:href="@{/noticepage(curPage=${pageNumber + 1})}"
+                   th:text="${pageNumber + 1}">1</a></li>
             <li class="page-item" th:if="${currentPage != totalPages}">
                 <a class="page-link" th:href="@{/noticepage(curPage=${totalPages})}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
@@ -47,6 +48,8 @@
             </li>
         </ul>
     </nav>
+    <script>
+    </script>
 </div>
 <!-- 컨트롤 알트 엘 -->
 </html>
