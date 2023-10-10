@@ -14,6 +14,7 @@ public class Notice {
     private String title;
     private String content;
     private Long userId;
+    private String name;
 
     protected Notice() {}
 
@@ -21,6 +22,13 @@ public class Notice {
         this.title = title;
         this.content = content;
         this.userId = userId;
+    }
+
+    public Notice(String title, String content, String name, Long userId) {
+        this.title = title;
+        this.content = content;
+        this.name = name;
+        this.userId=userId;
     }
 
     public Long getId() {
@@ -37,6 +45,10 @@ public class Notice {
 
     public Long getUserId() {
         return userId;
+    }
+
+    public String getUserName() {
+        return name;
     }
 
     public void changeTitle(String title) {

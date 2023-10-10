@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.http.HttpRequest;
+import java.util.Date;
 
 @Controller
 public class NoticeController {
@@ -29,6 +32,7 @@ public class NoticeController {
     @PostMapping("/noticeWrite")
     public String createNotice(NoticeCreateDTO dto, HttpSession session){
         User user = (User) session.getAttribute("user");
+        // session에서 유저 정보를 가지고 와서 유저에 저장
 
         noticeService.createNotice(dto, user);
 
@@ -57,7 +61,10 @@ public class NoticeController {
         // DB에서 전체 게시글 데이터를 프론트로 가져와서 Model에 담아서 notice-list.html에 보여준다.
         // List<NoticeCreateDTO> noticeCreateDTOList = noticeService.findAll();
 
+        // session에서 유저 정보를 가지고 와서 유저에 저장
+        model.addAttribute("date", new Date());
         model.addAttribute("notice", noticeService.findAll());
+
         return "notice-list";
     }
 

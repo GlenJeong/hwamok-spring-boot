@@ -32,7 +32,7 @@
                             <label for="userConfirmPassword" class="form-label">Confirm Password</label>
                             <input type="password" class="form-control" id="userConfirmPassword">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" th:onclick="passwordValidate()">Submit</button>
                         <a href="/withdraw" class="btn btn-danger">Withdraw</a>
                         <a href="/" class="btn btn-light-danger m-1">cancel</a>
                     </form>
@@ -69,9 +69,9 @@
             }
         }
 
-        document.getElementById("changeProfileFrom").onsubmit = function () {
-            return passwordValidate();
-        };
+        // document.getElementById("changeProfileFrom").onsubmit = function () {
+        //     return passwordValidate();
+        // };
     </script>
 </div>
 </html>

@@ -47,3 +47,5 @@ spring:
     # 캐시가 언제 갱신되느냐 이거는 아무도 모름
     # A라는 데이터를 수정을 함
     # 반영이 안댔음 -> 새로고침 오지게 해야함
+  messages:
+    basename: messages

@@ -46,18 +46,21 @@ public class SignServiceImpl implements SignService {
 
 
     //이메일
-    
+
     User user = signRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Not Found User"));
+    // DB에 Email이 없으면 RuntimeException 발생하고 Not Found User 메시지 출력
     System.out.println("Service user.getPassword() = " + user.getPassword());
-    if(!password.equals(user.getPassword())){
-      //throw new RuntimeException("Password Not Match");
-    }
+      if (!password.equals(user.getPassword())) {
+        throw new RuntimeException("Password Not Match");
+      }
+
+
 
     // 비지니스 로직을 처리하는 곳
     // 비밀번호 검증해야 하는 곳 <-- 비지니스 로직
 
-    
-    
+
+
     // Optional의 의미는 null or not null 2가지만 가지고 있음
     // Optional뒤에 다음에 메서드 체이닝으로 orElseThrow가 null이면 throw한다. (Exception)
     // orElseThrow는 람다식을 통해서 제가 익셉션을 지정할 수 있음

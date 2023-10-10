@@ -74,10 +74,9 @@ public class SignController {
     User user = signService.signIn(dto.getEmail(), dto.getPassword());
 
     session.setAttribute("user", user);
+    // session에 user 객체를 넘겨준다.
+    // 로그인을 하면서 최초로 세션이 생성된다.
     //session.setMaxInactiveInterval(60); // 세션 유효시간, 기본이 초단위, 60는 60초를 의미
-
-
-
 
 
     // SOLID 원칙 (OOP의 설계 원칙)
@@ -111,4 +110,5 @@ public class SignController {
     // session.removeAttribute("user"); 사용자 정보를 제거함
     return "redirect:/";
   }
+
 }

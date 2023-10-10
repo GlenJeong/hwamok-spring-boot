@@ -32,7 +32,7 @@ public class UserController {
         User changeUser = userService.changeProfile(user.getEmail(), dto.getName(), dto.getPassword());
 
         session.setAttribute("user", changeUser);
-
+        // 기존에 있던 세션 정보를 changeUser의 정보로 새로 생성한다.
 
         // 숙제: 마이페이지 수정하면 페이지 그대로인거
         return "ui-mypage";
@@ -41,6 +41,7 @@ public class UserController {
     @GetMapping("/withdraw")
     public String withdraw(HttpSession session){
         User user = (User) session.getAttribute("user");
+        // session에서 유저 정보를 가지고 와서 유저에 저장
 
 
         userService.withdraw(user.getEmail());

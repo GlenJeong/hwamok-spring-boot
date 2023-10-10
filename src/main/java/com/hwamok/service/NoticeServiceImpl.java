@@ -34,7 +34,7 @@ public class NoticeServiceImpl implements NoticeService {
         if(dto.getContent().isBlank()){
             throw new RuntimeException("invalidate content");
         }
-        noticeRepository.save(new Notice(dto.getTitle(), dto.getContent(), user.getId()));
+        noticeRepository.save(new Notice(dto.getTitle(), dto.getContent(), user.getName(), user.getId()));
 
     }
 

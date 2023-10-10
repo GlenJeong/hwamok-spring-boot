@@ -6,9 +6,12 @@
 }
 
 html{
+    /*
     font-size: 10px;
-    /*html안에서 모든 폰트 10px으로 초기화*/
+    html안에서 모든 폰트 10px으로 초기화
+    */
 }
+
 
 ul, ui{
     list-style: none;
@@ -34,15 +37,17 @@ a{
 }
 
 .board_title strong{
+    font-size: 30px;
+    /*
     font-size: 3rem;
-    /*rem인 최상위 태그 html{
+    rem인 최상위 태그 html{
     font-size: 10px;라서 strong은 30px이 된다.
 } */
 }
 
 .board_title p {
     margin-top: 5px;
-    font-size: 1.4rem;
+    font-size: 14px
     /*margin-top은 p태그 위에 5px의 공간 여유를 주는 것이다.
     html 태그 10px에 1.4를 곱한 것이다.*/
 }
@@ -68,7 +73,7 @@ a{
     padding: 10px;
     border: 1px solid #000;
     border-radius: 2px;
-    font-size: 1.4rem;
+    font-size: 14px;
     /*display는 위치를 지정하는 것인데 inline-block으로 지정하면 가로로 놓인다.
     최소 길이는 80px이고 margin-left는 왼쪽으로 10px 밀어라
     padding은 a 태그 안에 주위을 10px 여유 공간을 줘라
@@ -115,7 +120,7 @@ a{
     display: inline-block;
     padding: 15px 0;
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 14px;
 }
 
 .board_list > div.top > div {
@@ -128,19 +133,34 @@ a{
 
 .board_list .title{
     width: 60%;
-<<<<<<< HEAD
     text-align: center;
-=======
-    text-align: left;
->>>>>>> origin/main
 }
 
 .board_list .top .title{
     text-align: center;
-
 }
 
 .board_list .writer{
+    text-align: center;
+}
+
+.board_list .top .writer{
+    text-align: center;
+}
+
+.board_list .userid{
+    text-align: right;
+}
+
+.board_list .top .userid{
+    text-align: right;
+}
+
+.board_list .writer{
+    width: 10%;
+}
+
+.board_list .userid{
     width: 10%;
 }
 
@@ -175,13 +195,13 @@ a{
 
 .board_page a.bt{
     padding-top: 10px;
-    font-size: 1.2rem;
+    font-size: 12px;
     letter-spacing: -1px;
 }
 
 .board_page a.num{
     padding-top: 9px;
-    font-size: 1.4rem;
+    font-size: 14px;
 }
 
 .board_page a.num.on{
@@ -202,7 +222,7 @@ a{
 .board_view .title{
     padding: 20px 15px;
     border-bottom: 1px dashed #ddd;
-    font-size: 2rem;
+    font-size: 20px;
 }
 
 .board_view .info{
@@ -241,7 +261,7 @@ a{
 .board_view .info dl dt,
 .board_view .info dl dd{
     display: inline-block;
-    font-size: 1.4rem;
+    font-size: 14px;
 }
 
 .board_view .info dl dd{
@@ -253,7 +273,7 @@ a{
     padding: 15px;
     border-bottom: 1px solid #000;
     line-height: 160%;
-    font-size: 1.4rem;
+    font-size: 14px;
 }
 
 .board_write{
@@ -293,7 +313,7 @@ a{
     display: inline-block;
     /* 제목과 input, 글쓴이와 input, 비밀번호와 input이 가로로 놓일 수 있도록함 */
     vertical-align: middle;
-    font-size: 1.4rem;
+    font-size: 14px;
 }
 
 .board_write .title dt,
@@ -330,10 +350,10 @@ a{
     box-sizing: border-box;
     border: 0;
     resize: vertical;
-    font-size: 1.4rem;
+    font-size: 14px;
     /* resize: vertical은 textarea을 위아래로 늘어나고 줄어들게 함 */
 }
 
 .btn-primary {
-    font-size: 1.4rem;
+    font-size: 14px;
 }
