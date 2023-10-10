@@ -1,6 +1,7 @@
 package com.hwamok.controller;
 
 import com.hwamok.controller.dto.NoticeCreateDTO;
+import com.hwamok.entity.Notice;
 import com.hwamok.entity.User;
 import com.hwamok.service.NoticeService;
 import org.springframework.stereotype.Controller;
@@ -8,9 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.util.Date;
 
@@ -30,11 +33,11 @@ public class NoticeController {
     }
 
     @PostMapping("/noticeWrite")
-    public String createNotice(NoticeCreateDTO dto, HttpSession session){
+    public String createNotice(NoticeCreateDTO dto,HttpSession session, MultipartFile file) throws IOException {
         User user = (User) session.getAttribute("user");
         // session에서 유저 정보를 가지고 와서 유저에 저장
 
-        noticeService.createNotice(dto, user);
+        noticeService.createNotice(dto, user, file);
 
         return "redirect:/noticeList";
 
@@ -49,8 +52,8 @@ public class NoticeController {
     // {id} => PathVariable 많이 사용하는 추세, 특정 URL의 식별을 위해서 사용
 
 
-    @GetMapping("/noticeDelete")
-    public String noticeDelete(Long id){
+    @GetMapping("/noticeDelete/{id}")
+    public String noticeDelete(@PathVariable Long id){
         noticeService.noticeDelete(id);
 
         return "redirect:/noticeList";
@@ -69,8 +72,10 @@ public class NoticeController {
     }
 
     @GetMapping("/noticeView/{id}")
-    public String noticeView(@PathVariable Long id, Model model){
+    public String noticeView(@PathVariable Long id, Model model) throws IOException {
         model.addAttribute("view",noticeService.noticeView(id));
+
+
 
         return "notice-view";
     }

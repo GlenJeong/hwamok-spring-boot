@@ -16,6 +16,10 @@ public class Notice {
     private Long userId;
     private String name;
 
+    private String fileName;
+    private String filePath;
+
+
     protected Notice() {}
 
     public Notice(String title, String content, Long userId) {
@@ -24,12 +28,16 @@ public class Notice {
         this.userId = userId;
     }
 
-    public Notice(String title, String content, String name, Long userId) {
+    public Notice(String title, String content, String name, Long userId, String fileName, String filePath) {
         this.title = title;
         this.content = content;
         this.name = name;
         this.userId=userId;
+        this.fileName=fileName;
+        this.filePath=filePath;
     }
+
+
 
     public Long getId() {
         return id;
@@ -51,6 +59,18 @@ public class Notice {
         return name;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
     public void changeTitle(String title) {
         this.title=title;
     }
@@ -58,4 +78,5 @@ public class Notice {
     public void changeContent(String content) {
         this.content=content;
     }
+
 }

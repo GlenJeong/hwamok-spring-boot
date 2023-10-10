@@ -12,6 +12,11 @@
         <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3" disabled
                   th:text="${view.content}"></textarea>
     </div>
+    <div class="form-group">
+        <label for="fileName">file</label>
+        <input class="form-control" name="fileName" id="fileName" rows="3" disabled th:value="${view.fileName}">
+    </div>
+    <a th:href="@{${view.filePath == null ? null: view.filePath}}" class="btn btn-primary m-1">fileView</a>
     <a th:href="@{/noticeEdit/{id}(id=${view.id})}" class="btn btn-primary m-1">edit</a>
     <a th:href="@{/noticeDelete/{id}(id=${view.id})}" class="btn btn-danger m-1">withdraw</a>
     <a href="/noticeList" class="btn btn-light-danger m-1">cancel</a>

@@ -37,6 +37,10 @@ public class User {
   private String email;
   private String password;
 
+  private String originalName;
+
+  private String saveName;
+
   protected User() {}
   public User(String name, String email, String password) {
     this.name = name;
@@ -58,6 +62,7 @@ public class User {
   public String getPassword() {
     return password;
   }
+
 
   public void changeName(String name) {
     this.name=name;

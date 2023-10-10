@@ -11,8 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -27,14 +31,35 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public void createNotice(NoticeCreateDTO dto, User user) {
+    public void createNotice(NoticeCreateDTO dto, User user, MultipartFile file) throws IOException {
+
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        // 경로 지정하기, System.getProperty("user.dir") 경로를 담아주기 +  "\\src\\main\\resources\\static\\files"; 경로 지정하기
+
+        UUID uuid = UUID.randomUUID();
+        // 파일에 붙일 랜덤한 식별자 만들기
+
+        String fileName = uuid + "_" + file.getOriginalFilename();
+        // DB에 저장되는 파일 이름, 파일에 붙일 랜덤한 식별자와 문자 _ 와 실제 파일 이름을 하나의 문자열로 만든다.
+
+        File saveFile = new File(projectPath, fileName);
+        // 파일을 저장히기 위해서 File 클래스 추가,  new File(projectPath, "name"); 파일을 생성할 때
+        // projectPath에 넣어줄것이고 fileName이라는 이름으로 담긴다.
+
+        file.transferTo(saveFile);
+        // 파일 저정하기
+
+        dto.uploadFileName(fileName);
+        dto.uploadFilePath("/files/"+fileName);
+
+
         if(dto.getTitle().isBlank()){
             throw new RuntimeException("invalidate title");
         }
         if(dto.getContent().isBlank()){
             throw new RuntimeException("invalidate content");
         }
-        noticeRepository.save(new Notice(dto.getTitle(), dto.getContent(), user.getName(), user.getId()));
+        noticeRepository.save(new Notice(dto.getTitle(), dto.getContent(), user.getName(), user.getId(), dto.getFileName(), dto.getFilePath()));
 
     }
 
