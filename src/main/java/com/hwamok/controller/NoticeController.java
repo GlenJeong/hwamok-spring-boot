@@ -4,17 +4,14 @@ import com.hwamok.controller.dto.NoticeCreateDTO;
 import com.hwamok.entity.Notice;
 import com.hwamok.entity.User;
 import com.hwamok.service.NoticeService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.http.HttpRequest;
 import java.util.Date;
 
 @Controller
@@ -25,6 +22,16 @@ public class NoticeController {
     public NoticeController(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
+
+    @GetMapping("/notices") // 비동기 방식 처리
+    @ResponseBody // 잭슨 메시지 컴버터부터 사용할 수 있게 바꿔줌
+        public Page<Notice> getNotices(@RequestParam(required = false) String keyword, // 있을 수도 있고 없을 수도 있어서 required = false
+                               @RequestParam(defaultValue = "1") int curPage,
+                               @RequestParam(defaultValue = "3") int pageSize) {
+        return noticeService.getNotices(keyword, curPage, pageSize);
+
+    }
+
 
     @GetMapping("/noticeWrite")
     public String noticeForm(){
@@ -59,20 +66,27 @@ public class NoticeController {
         return "redirect:/noticeList";
     }
 
-    @GetMapping("/noticeList")
-    public String findAll(Model model){
+    // noticeList?curPage=4
+    @GetMapping(value = {"/noticeList/{curPage}"})
+    public String findAll(Model model, @PathVariable Integer curPage, @RequestParam(defaultValue = "5") int pageSize){
         // DB에서 전체 게시글 데이터를 프론트로 가져와서 Model에 담아서 notice-list.html에 보여준다.
         // List<NoticeCreateDTO> noticeCreateDTOList = noticeService.findAll();
 
+        Page<Notice> noticeAll = noticeService.findAll(curPage, pageSize);
+        System.out.println("curPage :::::::: " + curPage);
         // session에서 유저 정보를 가지고 와서 유저에 저장
         model.addAttribute("date", new Date());
-        model.addAttribute("notice", noticeService.findAll());
-
+        model.addAttribute("notice", noticeAll);
+        model.addAttribute("currentPage", curPage);
+        model.addAttribute("totalPages", noticeAll.getTotalPages());
+        model.addAttribute("totalCount", noticeAll.getTotalElements());
         return "notice-list";
     }
 
+
+
     @GetMapping("/noticeView/{id}")
-    public String noticeView(@PathVariable Long id, Model model) throws IOException {
+    public String noticeView(@PathVariable Long id, Model model){
         model.addAttribute("view",noticeService.noticeView(id));
 
 
@@ -88,8 +102,9 @@ public class NoticeController {
     }
 
     @PostMapping("/noticeUpdate/{id}")
-    public String noticeUpdate(@PathVariable Long id, NoticeCreateDTO dto){
-        noticeService.noticeUpdate(id, dto.getTitle(), dto.getContent());
+    public String noticeUpdate(@PathVariable Long id, NoticeCreateDTO dto, MultipartFile file)throws IOException{
+        noticeService.noticeUpdate(id, dto.getTitle(), dto.getContent(), file);
+
 
         return "redirect:/noticeList";
     }

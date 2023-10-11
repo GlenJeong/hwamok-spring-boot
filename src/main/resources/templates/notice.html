@@ -2,8 +2,8 @@
 <!--  Body Wrapper -->
 <div class="container-fluid" layout:fragment="content">
     <nav class="navbar navbar-light bg-light">
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline" action="/noticepage" method="get">
+            <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </nav>
@@ -15,43 +15,99 @@
             <th scope="col">Author</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="notice:${notices} "> <!-- <tr></tr> 한 줄을 의미한다. 타임리프에서 반복문은 내가 시작하고자 하는 태그 부분에서 태그가 끝나는 부분까지 -->
-            <!--
+        <tbody id="list">
+        <!--<tr th:each="notice:${notices} "> &lt;!&ndash; <tr></tr> 한 줄을 의미한다. 타임리프에서 반복문은 내가 시작하고자 하는 태그 부분에서 태그가 끝나는 부분까지 &ndash;&gt;
+            &lt;!&ndash;
                 th:each="key(notice):모돌에 담긴 키값(notices)"
                 notice[] = [notice1, notice2, notice3]
                 notice[0]
                 notice.get(2)
 
-            -->
+            &ndash;&gt;
             <td th:text="${notice.id}">1</td>
             <td th:text="${notice.title}">Mark</td>
             <td th:text="${notice.userId}">Otto</td>
-        </tr>
+        </tr>-->
         </tbody>
     </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item" th:if="${currentPage > 1 }">
-                <a class="page-link" th:href="@{/notice}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <!-- 10개의 게시물, 2개씩 보여줄 때, 5페이지-->
-            <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" class="page-item">
-                <a class="page-link" th:href="@{/noticepage(curPage=${pageNumber + 1})}"
-                   th:text="${pageNumber + 1}">1</a></li>
-            <li class="page-item" th:if="${currentPage != totalPages}">
-                <a class="page-link" th:href="@{/noticepage(curPage=${totalPages})}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <script>
-    </script>
+    <!-- 페이징을 공통 라이브러리로 만들어서 호출만 하는 방식
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:if="${currentPage > 1 }">
+                    <a class="page-link" th:href="@{/noticepage(curPage=1)}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                &lt;!&ndash; 10개의 게시물, 2개씩 보여줄 때, 5페이지&ndash;&gt;
+                <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}"
+                    class="page-item" th:classappend="${pageNumber + 1 == currentPage ? 'active' : ''}">
+                    <a class="page-link" th:href="@{/noticepage(curPage=${pageNumber + 1})}"
+                       th:text="${pageNumber + 1}">
+                    </a>
+                </li>
+                <li class="page-item" th:if="${currentPage != totalPages}">
+                    <a class="page-link" th:href="@{/noticepage(curPage=${totalPages})}" aria-label="Next">
+                        &lt;!&ndash;totalPages 마지막 페이지 이동 &ndash;&gt;
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>-->
+    <div id="pageNav"></div>
 </div>
 <!-- 컨트롤 알트 엘 -->
 </html>
+<script>
+    $(document).ready(function () {
+        search();
+    });
+
+    function search() {
+        $.ajax({
+            type: "get",
+            url: "/notices",
+            success: function (response) {
+                console.log("response: ", response);
+                let html = '';
+                response.content.forEach(notice => {
+                    html += "<tr>";
+                    html += `<td>${notice.id}</td>`; // ``백틱을 이용하면 스트링으로 바꿔줌
+                    html += `<td>${notice.title}</td>`;
+                    html += `<td>${notice.name}</td>`;
+                    html += "</tr>";
+                });
+                $("#list").append(html);
+                $("#pageNav").paging({
+                    pageSize: response.numberOfElements,
+                    currentPage: 1, // 내가 클릭한 숫자가 현재 페이지
+                    pageTotal: response.totalElements
+                });
+            },
+            error: function (error) {
+                console.error("error: ", error);
+            }
+        });
+    }
+</script>
+<!--
+    동기 방식
+    요청이 발생하면 응답을 무조건 기다림
+    1번 요청, 2번 요청 연달아 발생했을 때 1번 응답을 기다리고 끝나면 2번 응답을 함, 순서를 기다림
+    화면 깜빡임이 발생함
+    정적 리소스 파일(html, css, image...) -> 리로딩 됨 -> 새로고침
+
+    비동기 방식
+    요청을 하면 응답을 기다리지 않음
+    화면 깜빡임이 발생하지 않음
+    모든 파일들이 리로딩 되지 않고 필요한 부부만 리렌더링됨
+
+    비동기 요청을 보낼 수 있어야 하는 데
+    ES6(js) - fetch
+    jquery - ajax
+    react, vue.js - axios
+
+    리스트 조회, 페이징 처리, 필터 처리, 검색
+    javascript에서 처리
+-->
 
 

@@ -2,7 +2,7 @@
 <html lang="ko" layout:decorate="layout/basic" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!--  Body Wrapper -->
 <div class="container-fluid" layout:fragment="content">
-    <form th:action="@{/noticeUpdate(id=${edit.id})}" method="post">
+    <form th:action="@{/noticeUpdate/{id}(id=${edit.id})}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">제목</label>
             <input type="text" class="form-control" name="title" id="title" placeholder="제목" th:value="${edit.title}">
@@ -12,9 +12,14 @@
             <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"
                       th:text="${edit.content}"></textarea>
         </div>
+        <div class="form-group">
+            <label for="fileName">file</label>
+            <input class="form-control" name="fileName" id="fileName" rows="3" th:value="${edit.fileName}">
+        </div>
+        <input type="file" name="file">
         <button type="submit" class="btn btn-primary m-1">submit</button>
         <a th:href="@{/noticeDelete/{id}(id=${edit.id})}" class="btn btn-danger m-1">withdraw</a>
-        <a href="/noticeList" class="btn btn-light-danger m-1">cancel</a>
+        <input type="button" class="btn btn-light-danger m-1" value="cancel" onclick="history.go(-1)">
     </form>
     <script>
     </script>

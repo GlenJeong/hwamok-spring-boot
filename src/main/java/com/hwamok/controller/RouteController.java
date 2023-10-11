@@ -56,7 +56,7 @@ public class RouteController {
 
   @GetMapping("/ui-notice")
   public String board() {
-    return "redirect:/noticeList";
+    return "redirect:/noticeList/1";
   }
 
   @GetMapping("/my-page")
@@ -65,17 +65,7 @@ public class RouteController {
   }
 
   @GetMapping("/noticepage")
-  public String noticePage(Model model, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "2") int pageSize){
-    Page<Notice> notices = noticeService.getNotices(curPage, pageSize);
-
-    // 현재가 내가 보고 있는 페이지(Current page), 쿼리로 조회, select * from notice limit 2 offset 2
-    // 한 페이지에 몇 개를 보여줄건지(ItemPerPage), 쿼리로 조회
-    // 노티스의 총 갯수(Total Count)
-
-    model.addAttribute("notices", notices.getContent());
-    model.addAttribute("currentPage", curPage);
-    model.addAttribute("totalPages", notices.getTotalPages());
-    model.addAttribute("totalCount", notices.getTotalElements());
+  public String noticePage(){
     return "notice";
   }
 }

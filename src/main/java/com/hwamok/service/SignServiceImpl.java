@@ -47,11 +47,11 @@ public class SignServiceImpl implements SignService {
 
     //이메일
 
-    User user = signRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Not Found User"));
+    User user = signRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("이 메일이 존재하지 않습니다."));
     // DB에 Email이 없으면 RuntimeException 발생하고 Not Found User 메시지 출력
     System.out.println("Service user.getPassword() = " + user.getPassword());
       if (!password.equals(user.getPassword())) {
-        throw new RuntimeException("Password Not Match");
+        throw new RuntimeException("패스워드가 일치하지 않습니다.");
       }
 
 

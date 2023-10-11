@@ -1,5 +1,7 @@
 package com.hwamok.entity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,7 @@ public class Notice {
 
     private String fileName;
     private String filePath;
+
 
 
     protected Notice() {}
@@ -79,4 +82,11 @@ public class Notice {
         this.content=content;
     }
 
+    public void uploadFileName(String fileName) {
+        this.fileName=fileName;
+    }
+
+    public void uploadFilePath(String filePath) {
+        this.filePath=filePath;
+    }
 }

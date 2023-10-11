@@ -41,19 +41,34 @@
                     <div class="userid" th:text="${noticelist.userId}">1</div>
                     <!--
                     <div class="date">2023.08.11</div>
-                    <div class="count">20</div>  -->
+                    <div class="count">20</div>
+                    -->
                 </div>
             </div>
             <div class="board_page">
-                <a href="#" class="bt first"><<</a>
-                <a href="#" class="bt prev"><</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="num">4</a>
-                <a href="#" class="num">5</a>
-                <a href="#" class="bt">></a>
-                <a href="#" class="bt">>></a>
+                <a class="bt first" th:if="${currentPage > 1 }" th:href="@{/noticeList/{curPage}(curPage=1)}" aria-label="Last Previous">
+                        <span aria-hidden="true"><<</span>
+                </a>
+                <a class="bt prev" th:if="${currentPage > 1 }" th:href="@{/noticeList/{curPage}(curPage=${currentPage - 1})}" aria-label="Before Previous">
+                        <span aria-hidden="true"><</span>
+                </a>
+                <!--
+                class="num" th:classappend="${pageNumber + 1 == currentPage ? 'on' : ''}"
+                th:classappend는 현재 페이지가 pageNumber + 1 == currentPage 같다면 class="num"에 on추가 해라
+                그러면 class="num on"이 되고 board_style.css에서 .board_page a.num.on 의해 클릭한 숫자의 배경이
+                검은색이 된다.
+                -->
+                <a class="num" th:classappend="${pageNumber + 1 == currentPage ? 'on' : ''}"
+                   th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}"
+                       th:href="@{/noticeList/{curPage}(curPage=${pageNumber + 1})}"
+                       th:text="${pageNumber + 1}">
+                </a>
+                <a class="bt" th:if="${currentPage != totalPages}" th:href="@{/noticeList/{curPage}(curPage=${currentPage+1})}" aria-label="Next Page">
+                        <span aria-hidden="true">></span>
+                </a>
+                <a class="bt" th:if="${currentPage != totalPages}" th:href="@{/noticeList/{curPage}(curPage=${totalPages})}" aria-label="Last Page">
+                        <span aria-hidden="true">>></span>
+                </a>
             </div>
             <div class="bt_wrap">
                 <a href="/noticeWrite" class="on">등록</a>
