@@ -7,10 +7,11 @@ import com.hwamok.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 public class UserController {
@@ -22,15 +23,17 @@ public class UserController {
     }
 
     @PostMapping("/change-profile")
-    public String changeProfile(HttpSession session, ChangeProfileDTO dto){
+    public String changeProfile(HttpSession session, ChangeProfileDTO dto, MultipartFile imageFile)throws IOException {
 
+        System.out.println("imageFile = " + imageFile);
         // 유저의 이름과 패스워드 있으면 바꿔줌
         // 명시적 형변환
         User user = (User) session.getAttribute("user");
         // session에서 유저 정보를 가지고 와서 유저에 저장
 
-        User changeUser = userService.changeProfile(user.getEmail(), dto.getName(), dto.getPassword());
+        User changeUser = userService.changeProfile(user.getEmail(), dto.getName(), dto.getPassword(), imageFile);
 
+        System.out.println("changeUser.getFilePath() = " + changeUser.getFilePath());
         session.setAttribute("user", changeUser);
         // 기존에 있던 세션 정보를 changeUser의 정보로 새로 생성한다.
 

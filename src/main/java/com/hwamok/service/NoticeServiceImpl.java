@@ -93,7 +93,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public void noticeDelete(Long id) {
-        Notice notice = noticeRepository.findById(id).orElseThrow(() -> new RuntimeException("notice not found"));
+        Notice notice = noticeRepository.findById(id).orElseThrow(() -> new RuntimeException("not found notice"));
         noticeRepository.delete(notice);
         // optional를 벗어나기 위해서 orElseThrow 사용해야 한다.
     }
@@ -121,12 +121,12 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice noticeView(Long id) {
-       return noticeRepository.findById(id).orElseThrow(() -> new RuntimeException("notice not found"));
+       return noticeRepository.findById(id).orElseThrow(() -> new RuntimeException("not found notice"));
     }
 
     @Override
     public Notice noticeEdit(Long id) {
-        return noticeRepository.findById(id).orElseThrow(() -> new RuntimeException("notice not found"));
+        return noticeRepository.findById(id).orElseThrow(() -> new RuntimeException("not found notice"));
     }
 
     @Override
@@ -136,7 +136,7 @@ public class NoticeServiceImpl implements NoticeService {
 
         TransactionStatus status = platformTransactionManager.getTransaction(new DefaultTransactionAttribute());
 
-        Notice notice = noticeRepository.findById(id).orElseThrow(() -> new RuntimeException("notice not found"));
+        Notice notice = noticeRepository.findById(id).orElseThrow(() -> new RuntimeException("not found notice"));
 
         String projectNewPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\newFiles";
         // 경로 지정하기, System.getProperty("user.dir") 경로를 담아주기 +  "\\src\\main\\resources\\static\\files"; 경로 지정하기

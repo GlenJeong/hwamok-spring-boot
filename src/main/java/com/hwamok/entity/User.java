@@ -41,6 +41,8 @@ public class User extends BaseTimeEntity{
 
   private String saveName;
 
+  private String filePath;
+
   protected User() {}
   public User(String name, String email, String password) {
     this.name = name;
@@ -63,6 +65,17 @@ public class User extends BaseTimeEntity{
     return password;
   }
 
+  public String getOriginalName() {
+    return originalName;
+  }
+
+  public String getSaveName() {
+    return saveName;
+  }
+
+  public String getFilePath() {
+    return filePath;
+  }
 
   public void changeName(String name) {
     this.name=name;
@@ -70,5 +83,17 @@ public class User extends BaseTimeEntity{
 
   public void changePassword(String password) {
     this.password=password;
+  }
+
+  public void uploadFileName(String saveName) {
+    this.saveName=saveName;
+  }
+
+  public void uploadOrignalName(String originalName) {
+    this.originalName=originalName;
+  }
+
+  public void uploadFilePath(String filePath) {
+    this.filePath=filePath;
   }
 }

@@ -1,9 +1,12 @@
 <html lang="ko" layout:decorate="layout/basic" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!--  Body Wrapper -->
 <div class="container-fluid" layout:fragment="content">
-    <a href="/noticeWrite" class="btn btn-primary m-1" th:if="${session.user != null}">Add</a>
-    <input class="form-control mr-sm-2" id="search" name="keyword" type="search" placeholder="Search" aria-label="Search">
+    <span class="search_in">
+        <input class="form-control mr-sm-2" id="search" name="keyword" type="search" placeholder="Search"
+               aria-label="Search">
+    </span>
     <button class="btn btn-outline-success my-2 my-sm-0" id="searchBtn" type="button">Search</button>
+    <a href="/noticeWrite" class="btn btn-primary m-1" th:if="${session.user != null}">Add</a>
     <table class="table">
         <thead>
         <tr>

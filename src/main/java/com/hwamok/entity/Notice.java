@@ -79,9 +79,7 @@ public class Notice extends BaseTimeEntity {
         this.content=content;
     }
 
-    public void changeName(String name) {
-        this.name = name;
-    }
+    public void changeName(String name) { this.name = name; }
 
     public void uploadFileName(String fileName) {
         this.fileName=fileName;

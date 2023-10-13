@@ -20,8 +20,8 @@
     <a th:href="@{${view.getFilePath() == null ? null: view.getFilePath()}}" class="btn btn-primary m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">fileView</a>
     <a th:href="@{/noticeEdit/{id}(id=${view.id})}" class="btn btn-primary m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">edit</a>
     <a th:href="@{/noticeDelete/{id}(id=${view.id})}" class="btn btn-danger m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">withdraw</a>
-    <a th:herf="@{/noticeDelete/{id}(id=*{id})}" class="btn btn-danger m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">삭제</a>
-    <input type="button" class="btn btn-light-danger m-1" value="cancel" onclick="history.back()">
+    <a th:href="@{/noticeDelete/{id}(id=*{id})}" class="btn btn-danger m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">삭제</a>
+    <input type="button" class="btn btn-light-danger m-1" value="cancel" onclick="history.back()" th:if="${session.user != null} and ${view.userId == session.user.id}">
 </div>
 </html>
 <script>
