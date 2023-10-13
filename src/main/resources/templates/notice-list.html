@@ -71,7 +71,7 @@
                 </a>
             </div>
             <div class="bt_wrap">
-                <a href="/noticeWrite" class="on">등록</a>
+                <a href="/noticeWrite" class="on" th:if="${session.user != null}">등록</a>
                 <!--<a href="#">수정</a>-->
             </div>
         </div>

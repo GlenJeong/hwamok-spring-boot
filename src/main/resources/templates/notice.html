@@ -1,12 +1,9 @@
 <html lang="ko" layout:decorate="layout/basic" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!--  Body Wrapper -->
 <div class="container-fluid" layout:fragment="content">
-    <nav class="navbar navbar-light bg-light">
-        <form class="form-inline" action="/noticepage" method="get">
-            <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </nav>
+    <a href="/noticeWrite" class="btn btn-primary m-1" th:if="${session.user != null}">Add</a>
+    <input class="form-control mr-sm-2" id="search" name="keyword" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" id="searchBtn" type="button">Search</button>
     <table class="table">
         <thead>
         <tr>
@@ -59,27 +56,33 @@
 </html>
 <script>
     $(document).ready(function () {
-        search();
+        search(1);
+
+        $("#searchBtn").click(function () {
+            search(1);
+        });
     });
 
-    function search() {
+    function search(curPage) {
+        let keyword = $("#search").val();
+        console.log(keyword);
         $.ajax({
             type: "get",
-            url: "/notices",
+            url: `/notices?curPage=${curPage}&keyword=${keyword}`, // 쿼리스트링으로 파라미터 전달
             success: function (response) {
                 console.log("response: ", response);
                 let html = '';
                 response.content.forEach(notice => {
                     html += "<tr>";
                     html += `<td>${notice.id}</td>`; // ``백틱을 이용하면 스트링으로 바꿔줌
-                    html += `<td>${notice.title}</td>`;
+                    html += `<td><a href="/noticeView/${notice.id}">${notice.title}</a></td>`;
                     html += `<td>${notice.name}</td>`;
                     html += "</tr>";
                 });
-                $("#list").append(html);
+                $("#list").empty().append(html);
                 $("#pageNav").paging({
                     pageSize: response.numberOfElements,
-                    currentPage: 1, // 내가 클릭한 숫자가 현재 페이지
+                    currentPage: curPage, // 내가 클릭한 숫자가 현재 페이지
                     pageTotal: response.totalElements
                 });
             },
@@ -87,6 +90,10 @@
                 console.error("error: ", error);
             }
         });
+    }
+
+    function gopage(curPage) {
+        search(curPage)
     }
 </script>
 <!--

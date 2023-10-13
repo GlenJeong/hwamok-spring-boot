@@ -2,25 +2,32 @@
 <html lang="ko" layout:decorate="layout/basic" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!--  Body Wrapper -->
 <div class="container-fluid" layout:fragment="content">
+    <button type="button" class="btn btn-light-danger m-1" id="backBtn">Back</button>
     <div class="form-group">
         <label for="title">제목</label>
-        <input type="text" class="form-control" name="title" id="title" placeholder="제목" disabled
+        <input type="text" class="form-control" name="title" id="title" placeholder="제목" th:disabled="${session.user == null} or ${view.userId != session.user.id}"
                th:value="${view.title}">
     </div>
     <div class="form-group">
         <label for="exampleFormControlTextarea1">본문</label>
-        <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3" disabled
+        <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3" th:disabled="${session.user == null} or ${view.userId != session.user.id}"
                   th:text="${view.content}"></textarea>
     </div>
     <div class="form-group">
         <label for="fileName">file</label>
-        <input class="form-control" name="fileName" id="fileName" rows="3" disabled th:value="${view.fileName}">
+        <input class="form-control" name="fileName" id="fileName" rows="3" th:disabled="${session.user == null} or ${view.userId != session.user.id}" th:value="${view.fileName}">
     </div>
-    <a th:href="@{${view.getFilePath() == null ? null: view.getFilePath()}}" class="btn btn-primary m-1">fileView</a>
-    <a th:href="@{/noticeEdit/{id}(id=${view.id})}" class="btn btn-primary m-1">edit</a>
-    <a th:href="@{/noticeDelete/{id}(id=${view.id})}" class="btn btn-danger m-1">withdraw</a>
+    <a th:href="@{${view.getFilePath() == null ? null: view.getFilePath()}}" class="btn btn-primary m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">fileView</a>
+    <a th:href="@{/noticeEdit/{id}(id=${view.id})}" class="btn btn-primary m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">edit</a>
+    <a th:href="@{/noticeDelete/{id}(id=${view.id})}" class="btn btn-danger m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">withdraw</a>
+    <a th:herf="@{/noticeDelete/{id}(id=*{id})}" class="btn btn-danger m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">삭제</a>
     <input type="button" class="btn btn-light-danger m-1" value="cancel" onclick="history.back()">
-    <script>
-    </script>
 </div>
 </html>
+<script>
+    $(document).ready(function () {
+        $("#backBtn").click(function (){
+           history.back();
+        });
+    })
+</script>

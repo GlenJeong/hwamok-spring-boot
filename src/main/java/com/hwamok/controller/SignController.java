@@ -68,14 +68,14 @@ public class SignController {
   // 로그인은 GET으로 해야하지만
 
   @PostMapping("/sign-in")
-  public String signIn(SignInDTO dto, HttpSession session, Model m){
+  public String signIn(SignInDTO dto, HttpSession session, Model model){
     // @RequestParam 쿼리 스트링을 받겠다는 의미함 ? key=value email이 key이고 value는 email안에 값이다.
 
     User user = null;
     try {
       user = signService.signIn(dto.getEmail(), dto.getPassword());
     } catch (RuntimeException re) {
-      m.addAttribute("errMsg", re.getMessage());
+      model.addAttribute("errMsg", re.getMessage());
       re.printStackTrace();
       return "sign-in";
     }

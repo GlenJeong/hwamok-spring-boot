@@ -46,7 +46,7 @@ public class NoticeController {
 
         noticeService.createNotice(dto, user, file);
 
-        return "redirect:/noticeList";
+        return "redirect:/ui-notice";
 
         // 숙제: 수정 삭제
     }
@@ -63,7 +63,7 @@ public class NoticeController {
     public String noticeDelete(@PathVariable Long id){
         noticeService.noticeDelete(id);
 
-        return "redirect:/noticeList";
+        return "notice";
     }
 
     // noticeList?curPage=4
@@ -87,8 +87,16 @@ public class NoticeController {
 
     @GetMapping("/noticeView/{id}")
     public String noticeView(@PathVariable Long id, Model model){
-        model.addAttribute("view",noticeService.noticeView(id));
 
+        try {
+            System.out.println("//////////////////////////////////////////////////////");
+            Notice notice = noticeService.noticeView(id);
+            model.addAttribute("view", notice);
+        }catch (RuntimeException re){
+            System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::");
+            model.addAttribute("errorMessagesNotice", re.getMessage());
+            return "errorMessagesNotice";
+        }
 
 
         return "notice-view";
@@ -96,17 +104,27 @@ public class NoticeController {
 
     @GetMapping("/noticeEdit/{id}")
     public String noticeEdit(@PathVariable Long id, Model model){
-        model.addAttribute("edit",noticeService.noticeEdit(id));
+        try{
+            System.out.println("//////////////////////////////////////////////////////");
+            Notice notice = noticeService.noticeView(id);
+            model.addAttribute("edit", notice);
+        }catch (RuntimeException re){
+            System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::");
+            model.addAttribute("errorMessagesNotice", re.getMessage());
+            return "errorMessagesNotice";
+        }
 
         return "notice-edit";
     }
 
     @PostMapping("/noticeUpdate/{id}")
-    public String noticeUpdate(@PathVariable Long id, NoticeCreateDTO dto, MultipartFile file)throws IOException{
-        noticeService.noticeUpdate(id, dto.getTitle(), dto.getContent(), file);
+    public String noticeUpdate(@PathVariable Long id, NoticeCreateDTO dto, HttpSession session, MultipartFile file)throws IOException{
+        User user = (User) session.getAttribute("user");
+
+        noticeService.noticeUpdate(id, dto.getTitle(), dto.getContent(), file, user.getName());
 
 
-        return "redirect:/noticeList";
+        return "redirect:/ui-notice";
     }
 }
 

@@ -3,7 +3,7 @@ package com.hwamok.entity;
 import javax.persistence.*;
 
 @Entity
-public class User {
+public class User extends BaseTimeEntity{
   // DB 예약어 == 특정 단어는 DB에서 사용되니까 테이블이름으로 사용하지마
 
 

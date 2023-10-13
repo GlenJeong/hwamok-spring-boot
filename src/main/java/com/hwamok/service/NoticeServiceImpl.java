@@ -78,11 +78,9 @@ public class NoticeServiceImpl implements NoticeService {
 
         PageRequest pageRequest = PageRequest.of(curPage - 1, pageSize);
 
-        if(Strings.isBlank(keyword)){  // s == null || s.isEmpty()
-            return noticeRepository.findAll(pageRequest);
-        } else {
-            return noticeRepository.findByTitleContains(keyword, pageRequest);
-        }
+
+            return noticeRepository.getNotices(keyword, pageRequest);
+
 
 
         // 페이징 처리가 된 객체는 List가 아니라 Page로 변환이 됨
@@ -97,6 +95,7 @@ public class NoticeServiceImpl implements NoticeService {
     public void noticeDelete(Long id) {
         Notice notice = noticeRepository.findById(id).orElseThrow(() -> new RuntimeException("notice not found"));
         noticeRepository.delete(notice);
+        // optional를 벗어나기 위해서 orElseThrow 사용해야 한다.
     }
 
     @Override
@@ -123,7 +122,6 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public Notice noticeView(Long id) {
        return noticeRepository.findById(id).orElseThrow(() -> new RuntimeException("notice not found"));
-
     }
 
     @Override
@@ -132,7 +130,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public void noticeUpdate(Long id, String title, String content, MultipartFile file) throws IOException{
+    public void noticeUpdate(Long id, String title, String content, MultipartFile file, String name) throws IOException{
         System.out.println("NoticeServiceImpl title = " + title);
         System.out.println("NoticeServiceImpl content = " + content);
 
@@ -166,6 +164,7 @@ public class NoticeServiceImpl implements NoticeService {
             }
             notice.changeTitle(title);
             notice.changeContent(content);
+            notice.changeName(name);
             notice.uploadFileName(fileName);
             notice.uploadFilePath("/newFiles/"+fileName);
 

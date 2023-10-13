@@ -50,10 +50,10 @@
             }
 
             for(let i = startPage; i <= endPage; i++){
-                if(currentPage === 1){
+                if(currentPage === i){
                     html += `<li class="page-item"><a class="page-link">${i}</a></li>`;
                 }else {
-                    html += `<li class="page-item"><a class="page-link" onclick="${goPageFnName}(${i})">${i}</a></li>`;
+                    html += `<li class="page-item"><a class="page-link" onclick="${goPageFnName}(${i});">${i}</a></li>`;
 
                 }
             }
