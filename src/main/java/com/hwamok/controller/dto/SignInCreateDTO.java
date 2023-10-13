@@ -1,11 +1,11 @@
 package com.hwamok.controller.dto;
 
-public class SignInDTO {
+public class SignInCreateDTO {
 
     private String email;
     private String password;
 
-    public SignInDTO(String email, String password) {
+    public SignInCreateDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }

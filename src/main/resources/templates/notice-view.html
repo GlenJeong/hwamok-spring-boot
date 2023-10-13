@@ -15,7 +15,7 @@
     </div>
     <div class="form-group">
         <label for="fileName">file</label>
-        <input class="form-control" name="fileName" id="fileName" rows="3" th:disabled="${session.user == null} or ${view.userId != session.user.id}" th:value="${view.fileName}">
+        <input class="form-control" name="fileName" id="fileName" rows="3" th:disabled="${session.user == null} or ${view.userId != session.user.id}" th:value="${view.original}">
     </div>
     <a th:href="@{${view.getFilePath() == null ? null: view.getFilePath()}}" class="btn btn-primary m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">fileView</a>
     <a th:href="@{/noticeEdit/{id}(id=${view.id})}" class="btn btn-primary m-1" th:if="${session.user != null} and ${view.userId == session.user.id}">edit</a>

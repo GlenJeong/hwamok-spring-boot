@@ -1,6 +1,12 @@
 package com.hwamok.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.hwamok.service.util.CheckBirthday;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.text.ParseException;
+import java.util.Date;
 
 @Entity
 public class User extends BaseTimeEntity{
@@ -34,8 +40,16 @@ public class User extends BaseTimeEntity{
   private Long id;
   @Column(length = 50)
   private String name;
+
   private String email;
+
   private String password;
+
+//  @DateTimeFormat(pattern = "yyyy-MM-dd")
+//  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+
+  @JsonFormat
+  private String birthday;
 
   private String originalName;
 
@@ -44,11 +58,17 @@ public class User extends BaseTimeEntity{
   private String filePath;
 
   protected User() {}
-  public User(String name, String email, String password) {
+
+  public User(String name, String email, String password, String birthday) throws Exception {
     this.name = name;
     this.email = email;
     this.password = password;
+    this.birthday= birthday;
+    this.originalName="";
+    this.saveName="";
+    this.filePath="";
   }
+
   public Long getId() {
     return id;
   }
@@ -63,6 +83,10 @@ public class User extends BaseTimeEntity{
 
   public String getPassword() {
     return password;
+  }
+
+  public String getBirthday() {
+    return birthday;
   }
 
   public String getOriginalName() {
@@ -85,6 +109,10 @@ public class User extends BaseTimeEntity{
     this.password=password;
   }
 
+  public void changeBirthday(String birthday){
+    this.birthday=birthday;
+  }
+
   public void uploadFileName(String saveName) {
     this.saveName=saveName;
   }
@@ -96,4 +124,6 @@ public class User extends BaseTimeEntity{
   public void uploadFilePath(String filePath) {
     this.filePath=filePath;
   }
+
+  public void updatePassword(String password) {this.password=password;}
 }

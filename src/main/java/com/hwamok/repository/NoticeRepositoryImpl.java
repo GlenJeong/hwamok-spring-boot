@@ -39,6 +39,8 @@ public class NoticeRepositoryImpl implements NoticeRepositoryCustom {
         // or => or
 
         // querydsl, jpa = N + 1문제? 다음 시간에 설명해줌
+        // 데이터를 조회할 때 1개의 쿼리로 요청이 처리 될 것으로 기대했으나
+        // 의도하지 않은 N개의 쿼리가 추가적으로 더 발생하는 현상
 
         booleanBuilder.and(eqKeyword(keyword));
         return new PageImpl<>(

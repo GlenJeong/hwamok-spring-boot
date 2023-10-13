@@ -27,7 +27,9 @@ public class NoticeController {
     @ResponseBody // 잭슨 메시지 컴버터부터 사용할 수 있게 바꿔줌
         public Page<Notice> getNotices(@RequestParam(required = false) String keyword, // 있을 수도 있고 없을 수도 있어서 required = false
                                @RequestParam(defaultValue = "1") int curPage,
-                               @RequestParam(defaultValue = "3") int pageSize) {
+                               @RequestParam(defaultValue = "3") int pageSize, Model model) {
+
+        model.addAttribute("pageSize", pageSize);
         return noticeService.getNotices(keyword, curPage, pageSize);
 
     }
@@ -40,10 +42,11 @@ public class NoticeController {
     }
 
     @PostMapping("/noticeWrite")
-    public String createNotice(NoticeCreateDTO dto,HttpSession session, MultipartFile file) throws IOException {
+    public String createNotice(NoticeCreateDTO dto,HttpSession session, MultipartFile file, Model model) throws IOException {
         User user = (User) session.getAttribute("user");
         // session에서 유저 정보를 가지고 와서 유저에 저장
 
+        model.addAttribute("file", file.getOriginalFilename());
         noticeService.createNotice(dto, user, file);
 
         return "redirect:/ui-notice";
@@ -72,6 +75,7 @@ public class NoticeController {
         // DB에서 전체 게시글 데이터를 프론트로 가져와서 Model에 담아서 notice-list.html에 보여준다.
         // List<NoticeCreateDTO> noticeCreateDTOList = noticeService.findAll();
 
+
         Page<Notice> noticeAll = noticeService.findAll(curPage, pageSize);
         System.out.println("curPage :::::::: " + curPage);
         // session에서 유저 정보를 가지고 와서 유저에 저장
@@ -89,11 +93,9 @@ public class NoticeController {
     public String noticeView(@PathVariable Long id, Model model){
 
         try {
-            System.out.println("//////////////////////////////////////////////////////");
             Notice notice = noticeService.noticeView(id);
             model.addAttribute("view", notice);
         }catch (RuntimeException re){
-            System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::");
             model.addAttribute("errorMessagesNotice", re.getMessage());
             return "errorMessagesNotice";
         }
@@ -105,11 +107,9 @@ public class NoticeController {
     @GetMapping("/noticeEdit/{id}")
     public String noticeEdit(@PathVariable Long id, Model model){
         try{
-            System.out.println("//////////////////////////////////////////////////////");
             Notice notice = noticeService.noticeView(id);
             model.addAttribute("edit", notice);
         }catch (RuntimeException re){
-            System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::");
             model.addAttribute("errorMessagesNotice", re.getMessage());
             return "errorMessagesNotice";
         }
@@ -120,6 +120,11 @@ public class NoticeController {
     @PostMapping("/noticeUpdate/{id}")
     public String noticeUpdate(@PathVariable Long id, NoticeCreateDTO dto, HttpSession session, MultipartFile file)throws IOException{
         User user = (User) session.getAttribute("user");
+
+        System.out.println("NoticeController noticeUpdate dto.getFilePath() = " + dto.getFilePath());
+        System.out.println("NoticeController noticeUpdate dto.getOriginal() = " + dto.getOriginal());
+        System.out.println("NoticeController noticeUpdate dto.getFileName() = " + dto.getFileName());
+        System.out.println("NoticeController noticeUpdate file.getOriginalFilename = " + file.getOriginalFilename());
 
         noticeService.noticeUpdate(id, dto.getTitle(), dto.getContent(), file, user.getName());
 

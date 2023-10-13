@@ -14,6 +14,7 @@ public class Notice extends BaseTimeEntity {
     private String content;
     private Long userId;
     private String name;
+    private String original;
     private String fileName;
     private String filePath;
 
@@ -28,11 +29,12 @@ public class Notice extends BaseTimeEntity {
         this.userId = userId;
     }
 
-    public Notice(String title, String content, String name, Long userId, String fileName, String filePath) {
+    public Notice(String title, String content, String name, Long userId, String original, String fileName, String filePath) {
         this.title = title;
         this.content = content;
         this.name = name;
         this.userId=userId;
+        this.original=original;
         this.fileName=fileName;
         this.filePath=filePath;
     }
@@ -50,17 +52,19 @@ public class Notice extends BaseTimeEntity {
     public String getContent() {
         return content;
     }
-
     public Long getUserId() {
         return userId;
     }
-
     public String getUserName() {
         return name;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getOriginal() {
+        return original;
     }
 
     public String getFileName() {
@@ -80,6 +84,10 @@ public class Notice extends BaseTimeEntity {
     }
 
     public void changeName(String name) { this.name = name; }
+
+    public void uploadOriginal(String original) {
+        this.original=original;
+    }
 
     public void uploadFileName(String fileName) {
         this.fileName=fileName;

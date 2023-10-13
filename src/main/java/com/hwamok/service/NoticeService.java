@@ -23,4 +23,5 @@ public interface NoticeService {
     Notice noticeEdit(Long id);
 
     void noticeUpdate(Long id, String title, String content, MultipartFile file, String name)throws IOException; // Long id, String title, String content
+
 }

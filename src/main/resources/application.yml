@@ -49,3 +49,18 @@ spring:
     # 반영이 안댔음 -> 새로고침 오지게 해야함
   messages:
     basename: messages
+
+    # mail
+  mail:
+    host: smtp.naver.com
+    port: 587
+    username: jyb0226@naver.com
+    password: TwinS1624!@
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+

@@ -4,7 +4,6 @@ import com.hwamok.controller.dto.NoticeCreateDTO;
 import com.hwamok.entity.Notice;
 import com.hwamok.entity.User;
 import com.hwamok.repository.NoticeRepository;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -35,22 +34,37 @@ public class NoticeServiceImpl implements NoticeService {
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
         // 경로 지정하기, System.getProperty("user.dir") 경로를 담아주기 +  "\\src\\main\\resources\\static\\files"; 경로 지정하기
 
-        UUID uuid = UUID.randomUUID();
-        // 파일에 붙일 랜덤한 식별자 만들기
+        UUID uuid = UUID.randomUUID();// 파일에 붙일 랜덤한 식별자 만들기
+
+
 
         String fileName = uuid + "_" + file.getOriginalFilename();
-        // DB에 저장되는 파일 이름, 파일에 붙일 랜덤한 식별자와 문자 _ 와 실제 파일 이름을 하나의 문자열로 만든다.
+            // DB에 저장되는 파일 이름, 파일에 붙일 랜덤한 식별자와 문자 _ 와 실제 파일 이름을 하나의 문자열로 만든다.
 
-        File saveFile = new File(projectPath, fileName);
-        // 파일을 저장히기 위해서 File 클래스 추가,  new File(projectPath, "name"); 파일을 생성할 때
-        // projectPath에 넣어줄것이고 fileName이라는 이름으로 담긴다.
+        String original = file.getOriginalFilename();
+        System.out.println("11111111111111111111111111111111111111111111111111111111111111111111");
+        System.out.println("original = " + original);
+        System.out.println("file.getOriginalFilename() = " + file.getOriginalFilename());
+        System.out.println("11111111111111111111111111111111111111111111111111111111111111111111");
 
-        file.transferTo(saveFile);
-        // 파일 저정하기
 
-        dto.uploadFileName(fileName);
-        dto.uploadFilePath("/files/"+fileName);
 
+
+        if(file.getOriginalFilename().equals("")){
+            dto.uploadFileName("");
+            dto.uploadFilePath("");
+            dto.uploadOriginal("");
+        } else {
+            File saveFile = new File(projectPath, fileName);
+            // 파일을 저장히기 위해서 File 클래스 추가,  new File(projectPath, "name"); 파일을 생성할 때
+            // projectPath에 넣어줄것이고 fileName이라는 이름으로 담긴다.
+
+            file.transferTo(saveFile);
+            // 파일 저정하기
+            dto.uploadFileName(fileName);
+            dto.uploadFilePath("/files/"+fileName);
+            dto.uploadOriginal(original);
+        }
 
         if(dto.getTitle().isBlank()){
             throw new RuntimeException("invalidate title");
@@ -58,7 +72,7 @@ public class NoticeServiceImpl implements NoticeService {
         if(dto.getContent().isBlank()){
             throw new RuntimeException("invalidate content");
         }
-        noticeRepository.save(new Notice(dto.getTitle(), dto.getContent(), user.getName(), user.getId(), dto.getFileName(), dto.getFilePath()));
+        noticeRepository.save(new Notice(dto.getTitle(), dto.getContent(), user.getName(), user.getId(), dto.getOriginal(), dto.getFileName(), dto.getFilePath()));
 
     }
 
@@ -130,9 +144,10 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public void noticeUpdate(Long id, String title, String content, MultipartFile file, String name) throws IOException{
+    public void noticeUpdate(Long id, String title, String content, MultipartFile fileUpdate, String name) throws IOException{
         System.out.println("NoticeServiceImpl title = " + title);
         System.out.println("NoticeServiceImpl content = " + content);
+        System.out.println("file :::::::::::::::::: = " + fileUpdate.getOriginalFilename());
 
         TransactionStatus status = platformTransactionManager.getTransaction(new DefaultTransactionAttribute());
 
@@ -144,16 +159,10 @@ public class NoticeServiceImpl implements NoticeService {
         UUID uuid = UUID.randomUUID();
         // 파일에 붙일 랜덤한 식별자 만들기
 
-        String fileName = uuid + "_" + file.getOriginalFilename();
+        String fileName = uuid + "_" + fileUpdate.getOriginalFilename();
         // DB에 저장되는 파일 이름, 파일에 붙일 랜덤한 식별자와 문자 _ 와 실제 파일 이름을 하나의 문자열로 만든다.
 
-        File saveNewFile = new File(projectNewPath, fileName);
-        // 파일을 저장히기 위해서 File 클래스 추가,  new File(projectPath, "name"); 파일을 생성할 때
-        // projectPath에 넣어줄것이고 fileName이라는 이름으로 담긴다.
-
-        file.transferTo(saveNewFile);
-        // 파일 저정하기
-
+        String origianl = fileUpdate.getOriginalFilename();
 
         try {
             if(title.isBlank()){
@@ -162,11 +171,34 @@ public class NoticeServiceImpl implements NoticeService {
             if(content.isBlank()){
                 throw new RuntimeException("invalidate content");
             }
+
+            if(name.isBlank()){
+                throw new RuntimeException("invalidate name");
+            }
             notice.changeTitle(title);
             notice.changeContent(content);
             notice.changeName(name);
-            notice.uploadFileName(fileName);
-            notice.uploadFilePath("/newFiles/"+fileName);
+            System.out.println("NoticeServiceImpl notice.getOriginal() = " + notice.getOriginal());
+            System.out.println("NoticeServiceImpl notice.getFileName() = " + notice.getFileName());
+            System.out.println("NoticeServiceImpl notice.getFilePath() = " + notice.getFilePath());
+
+            if(fileUpdate.getOriginalFilename().equals("")){
+                notice.uploadOriginal(notice.getOriginal());
+                notice.uploadFileName(notice.getFileName());
+                notice.uploadFilePath(notice.getFilePath());
+            } else {
+                File saveNewFile = new File(projectNewPath, fileName);
+                // 파일을 저장히기 위해서 File 클래스 추가,  new File(projectPath, "name"); 파일을 생성할 때
+                // projectPath에 넣어줄것이고 fileName이라는 이름으로 담긴다.
+
+                fileUpdate.transferTo(saveNewFile);
+                // 파일 저정하기
+                notice.uploadOriginal(origianl);
+                notice.uploadFileName(fileName);
+                notice.uploadFilePath("/newFiles/"+fileName);
+            }
+
+
 
             platformTransactionManager.commit(status);
         }catch (RuntimeException e){

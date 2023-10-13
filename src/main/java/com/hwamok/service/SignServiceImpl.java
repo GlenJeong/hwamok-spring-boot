@@ -4,8 +4,14 @@ import com.hwamok.controller.dto.UserCreateDTO;
 import com.hwamok.entity.User;
 import com.hwamok.repository.SignRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+
 
 @Service
 public class SignServiceImpl implements SignService {
@@ -34,8 +40,14 @@ public class SignServiceImpl implements SignService {
   }
 
   @Override
-  public void signUp(UserCreateDTO dto) {
-    signRepository.save(new User(dto.getName(), dto.getEmail(), dto.getPassword()));
+  public void signUp(UserCreateDTO dto) throws Exception {
+    System.out.println("dto.getName() = " + dto.getName());
+    System.out.println("dto.getEmail() = " + dto.getEmail());
+    System.out.println("dto.getPassword() = " + dto.getPassword());
+    System.out.println("dto.getBirthday() = " + dto.getBirthday());
+
+
+    signRepository.save(new User(dto.getName(), dto.getEmail(), dto.getPassword(), dto.getBirthday()));
   }
 
 
@@ -50,9 +62,9 @@ public class SignServiceImpl implements SignService {
     User user = signRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("이 메일이 존재하지 않습니다."));
     // DB에 Email이 없으면 RuntimeException 발생하고 Not Found User 메시지 출력
     System.out.println("Service user.getPassword() = " + user.getPassword());
-      if (!password.equals(user.getPassword())) {
-        throw new RuntimeException("패스워드가 일치하지 않습니다.");
-      }
+    if (!password.equals(user.getPassword())) {
+      throw new RuntimeException("패스워드가 일치하지 않습니다.");
+    }
 
 
 
@@ -74,6 +86,16 @@ public class SignServiceImpl implements SignService {
     return user;
 
 
+  }
+
+  public Map<String, String> validateHandling(Errors errors) {
+    Map<String, String> validatorResult = new HashMap<>();
+
+    for (FieldError error : errors.getFieldErrors()) {
+      String validKeyName = String.format("valid_%s", error.getField());
+      validatorResult.put(validKeyName, error.getDefaultMessage());
+    }
+    return validatorResult;
   }
 
   @Override

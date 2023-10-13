@@ -1,14 +1,11 @@
 package com.hwamok.controller;
 
-import com.hwamok.entity.Notice;
 import com.hwamok.service.NoticeService;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.ui.Model;
 
-import java.util.List;
 
 @Controller
 public class RouteController {
@@ -45,7 +42,9 @@ public class RouteController {
   }
 
   @GetMapping("/sign-in")
-  public String signInPage() {
+  public String signInPage(@CookieValue(name = "email", required = false) String email, Model model) {
+
+    model.addAttribute("email", email);
     return "sign-in";
   }
 
@@ -67,5 +66,25 @@ public class RouteController {
   @GetMapping("/noticepage")
   public String noticePage(){
     return "notice";
+  }
+
+  @GetMapping("/find-Account")
+  public String findAccount(){
+    return "find-Account";
+  }
+
+  @GetMapping("/find-Password")
+  public String findPassword(){
+    return "find-Password";
+  }
+
+  @GetMapping("/found-Email")
+  public String findEmail(){
+    return "found-Email";
+  }
+
+  @GetMapping("/found-Password")
+  public String foundPassword() {
+    return "found-Password";
   }
 }
