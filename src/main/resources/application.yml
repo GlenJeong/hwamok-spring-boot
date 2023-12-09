@@ -62,14 +62,3 @@ spring:
           auth: true
           starttls:
             enable: true
-
-
-cloud:
-  aws:
-    s3:
-      bucket:
-    stack.auto: false
-    region.static:
-    credentials:
-      accessKey:
-      secretKey:
