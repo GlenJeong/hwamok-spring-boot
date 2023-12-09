@@ -5,9 +5,10 @@ import com.hwamok.controller.dto.ChangeProfileDTO;
 import com.hwamok.controller.dto.MailDto;
 import com.hwamok.controller.dto.UserFindCreateDTO;
 import com.hwamok.controller.dto.UserPasswordCreateDto;
+import com.hwamok.core.integreation.aws.S3Service;
 import com.hwamok.entity.User;
 import com.hwamok.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hwamok.service.util.ValidateHandling;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,31 +20,34 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.text.ParseException;
+
 import java.util.Map;
 
 @Controller
 public class UserController {
 
     private UserService userService;
+    private ValidateHandling validateHandling;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping("/change-profile")
-    public String changeProfile( @Valid ChangeProfileDTO changeProfileDTO, Errors errors, HttpSession session, MultipartFile imageFile, Model model) {
+    public String changeProfile(@Valid ChangeProfileDTO changeProfileDTO, Errors errors, HttpSession session, MultipartFile imageFile, Model model) {
 
         System.out.println("UserController changeProfile changeProfileDTO.getBirthday() = " + changeProfileDTO.getBirthday());
 
+        // validateHandling start
         if(errors.hasErrors()){
             model.addAttribute("changeProfileDTO", changeProfileDTO); //회원가입 실패시 입력 데이터 값을 유지
 
-            Map<String, String> validatorResult = userService.findEmailvalidateHandling(errors);
+            Map<String, String> validatorResult = validateHandling.validateHandling(errors);
             validatorResult.entrySet();
             System.out.println("UserController changeProfile validatorResult = " + validatorResult);
             for (String keys : validatorResult.keySet()) {
                 model.addAttribute(keys, validatorResult.get(keys));
-               System.out.println(" signUp key = " + keys);
+                System.out.println(" signUp key = " + keys);
 
 
 
@@ -52,7 +56,7 @@ public class UserController {
 
             }
             return "ui-mypage";
-        }
+        } // validateHandling end
 
         System.out.println(" UserController changeProfile imageFile = " + imageFile);
         // 유저의 이름과 패스워드 있으면 바꿔줌
@@ -105,7 +109,7 @@ public class UserController {
     // R: 게시판 글 읽기
     // U: 게시판 수정 --> 한번에 수정
     // D: 게시판 삭제 --> 한번에 삭제
-    
+
     // R 대충 3가지로 나눔
     // 단건 조회, 리스트조회 List Collection, 페이징조회 Pageable(JPA)
 
@@ -115,7 +119,7 @@ public class UserController {
         if(errors.hasErrors()) {
             model.addAttribute("userPasswordCreateDto", userPasswordCreateDto);
 
-            Map<String, String> validationResult = userService.findEmailvalidateHandling(errors);
+            Map<String, String> validationResult = validateHandling.validateHandling(errors);
             for(String key: validationResult.keySet()){
                 model.addAttribute(key, validationResult.get(key));
 
@@ -145,7 +149,7 @@ public class UserController {
         if(errors.hasErrors()){
             model.addAttribute("userFindCreateDTO", userFindCreateDTO); //회원가입 실패시 입력 데이터 값을 유지
 
-            Map<String, String> validatorResult = userService.findEmailvalidateHandling(errors);
+            Map<String, String> validatorResult = validateHandling.validateHandling(errors);
             for (String key : validatorResult.keySet()) {
                 model.addAttribute(key, validatorResult.get(key));
                 System.out.println(" signUp key = " + key);

@@ -15,9 +15,6 @@ public interface UserService {
 
     void withdraw(String email);
     User findEmail(String name, String birthday) throws RuntimeException;
-
-    Map<String, String> findEmailvalidateHandling(Errors errors);
-
     User NewPassword(String name, String email) throws RuntimeException;
 
 }

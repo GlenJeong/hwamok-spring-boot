@@ -15,6 +15,4 @@ public interface SignService {
 
   String emailCheck(String email);
 
-  Map<String, String> validateHandling(Errors errors);
-
 }

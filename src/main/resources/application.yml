@@ -14,7 +14,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hwamok
+    url: jdbc:mysql://localhost:3306/hwamokboot
     username: root
     password: 1234
   jpa:
@@ -54,8 +54,8 @@ spring:
   mail:
     host: smtp.naver.com
     port: 587
-    username: jyb0226@naver.com
-    password: TwinS1624!@
+    username:
+    password:
     properties:
       mail:
         smtp:
@@ -64,3 +64,12 @@ spring:
             enable: true
 
 
+cloud:
+  aws:
+    s3:
+      bucket: hwamok3
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: AKIA5CD3QQSFBDQOIUXL
+      secretKey: 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

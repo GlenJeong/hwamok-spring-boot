@@ -1,20 +1,12 @@
 package com.hwamok.controller;
 
-import com.hwamok.service.NoticeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.ui.Model;
 
-
 @Controller
 public class RouteController {
-
-  private NoticeService noticeService;
-
-  public RouteController(NoticeService noticeService) {
-    this.noticeService = noticeService;
-  }
 
   @GetMapping("/ui-buttons")
   public String uiButtonsPage() {
@@ -86,5 +78,10 @@ public class RouteController {
   @GetMapping("/found-Password")
   public String foundPassword() {
     return "found-Password";
+  }
+
+  @GetMapping("/file-upload")
+  public String fileUpload() {
+    return "fileUpload";
   }
 }

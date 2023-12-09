@@ -14,6 +14,7 @@
                                  class="rounded-circle">
                             <input type="file" name="imageFile" accept=".jpg, .png">
                             <a th:href="@{${session.user.getFilePath()}}" class="btn btn-primary m-1">이미지보기</a>
+                            <a th:href="@{/delete-Image}" class="btn btn-primary m-1">이미지삭제</a>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>

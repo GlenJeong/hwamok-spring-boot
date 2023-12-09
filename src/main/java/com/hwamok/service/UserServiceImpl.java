@@ -114,13 +114,13 @@ public class UserServiceImpl implements UserService{
 
 
 
-            if(name.isBlank()){
-                throw new RuntimeException("이름을 입력해주세요.");
-            }
+        if(name.isBlank()){
+            throw new RuntimeException("이름을 입력해주세요.");
+        }
 
-            if(birthday.isBlank()){
-                throw new RuntimeException("생일을 입력해주세요.");
-            }
+        if(birthday.isBlank()){
+            throw new RuntimeException("생일을 입력해주세요.");
+        }
 
 
         User user = userRepository.findByNameAndBirthday(name, birthday).orElseThrow(()->new RuntimeException("일치하는 정보가 없습니다."));
@@ -166,16 +166,5 @@ public class UserServiceImpl implements UserService{
         }
 
         return userRepository.findByPassword(user.getPassword()).orElseThrow(()->new RuntimeException("비밀번호가 없습니다."));
-    }
-
-
-    public Map<String, String> findEmailvalidateHandling(Errors errors) {
-        Map<String, String> validatorResult = new HashMap<>();
-
-        for (FieldError error : errors.getFieldErrors()) {
-            String validKeyName = String.format("valid_%s", error.getField());
-            validatorResult.put(validKeyName, error.getDefaultMessage());
-        }
-        return validatorResult;
     }
 }

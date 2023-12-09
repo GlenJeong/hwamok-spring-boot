@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일 업로드 폼</title>
+</head>
+<body>
+
+<h2>파일 업로드</h2>
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <label for="file1">파일 선택:</label>
+    <label for="file2">파일 선택:</label>
+    <input type="file" id="file1" name="files" accept=".jpg, .jpeg, .png" required>
+    <input type="file" id="file2" name="files" accept=".jpg, .jpeg, .png" required>
+    <br>
+    <button type="submit">업로드</button>
+</form>
+
+</body>
+</html>

@@ -2,11 +2,14 @@ package com.hwamok.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hwamok.service.util.CheckBirthday;
+import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.text.ParseException;
 import java.util.Date;
+
+import static java.time.LocalTime.now;
 
 @Entity
 public class User extends BaseTimeEntity{
@@ -45,10 +48,9 @@ public class User extends BaseTimeEntity{
 
   private String password;
 
-//  @DateTimeFormat(pattern = "yyyy-MM-dd")
-//  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-
-  @JsonFormat
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+  @Column(nullable = false, columnDefinition = "DATE DEFAULT '1988-02-26'")
   private String birthday;
 
   private String originalName;
@@ -117,13 +119,9 @@ public class User extends BaseTimeEntity{
     this.saveName=saveName;
   }
 
-  public void uploadOrignalName(String originalName) {
-    this.originalName=originalName;
-  }
+  public void uploadOrignalName(String originalName) { this.originalName=originalName; }
 
-  public void uploadFilePath(String filePath) {
-    this.filePath=filePath;
-  }
+  public void uploadFilePath(String filePath) { this.filePath=filePath; }
 
   public void updatePassword(String password) {this.password=password;}
 }

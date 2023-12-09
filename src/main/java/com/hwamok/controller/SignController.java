@@ -5,6 +5,7 @@ import com.hwamok.controller.dto.UserCreateDTO;
 import com.hwamok.entity.User;
 import com.hwamok.service.SignService;
 
+import com.hwamok.service.util.ValidateHandling;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class SignController {
 
   private SignService signService;
+  private ValidateHandling validateHandling;
 
   public SignController(SignService signService) {
     this.signService = signService;
@@ -79,7 +81,7 @@ public class SignController {
     if(errors.hasErrors()){
       model.addAttribute("dto", dto); //회원가입 실패시 입력 데이터 값을 유지
 
-      Map<String, String> validatorResult = signService.validateHandling(errors);
+      Map<String, String> validatorResult = validateHandling.validateHandling(errors);
       for (String keys : validatorResult.keySet()) {
         model.addAttribute(keys, validatorResult.get(keys));
         System.out.println(" signUp key = " + keys);
