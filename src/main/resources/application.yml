@@ -67,9 +67,9 @@ spring:
 cloud:
   aws:
     s3:
-      bucket: hwamok3
+      bucket:
     stack.auto: false
-    region.static: ap-northeast-2
+    region.static:
     credentials:
-      accessKey: AKIA5CD3QQSFBDQOIUXL
-      secretKey: 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
+      accessKey:
+      secretKey:
